@@ -1,0 +1,2152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>PARAKH</title>
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.44.0/iconfont/tabler-icons.min.css"
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <style>
+
+        :root {
+            --ink: #0E1620;
+            --ink-raised: #16202C;
+            --ink-line: #243243;
+
+            --paper: #EDF1F5;
+            --paper-dim: #8CA0B3;
+
+            --lamp-red: #FF6B5E;
+            --lamp-amber: #F5B23D;
+            --lamp-green: #4FD08A;
+
+            --bg-red: #2C1512;
+            --bg-amber: #2B2110;
+            --bg-green: #122417;
+
+            --beam: #5FA8E8;
+
+            --sans: "IBM Plex Sans", Arial, sans-serif;
+            --mono: "IBM Plex Mono", monospace;
+        }
+
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+            margin: 0;
+            background-color: var(--ink);
+            color: var(--paper);
+            font-family: var(--sans);
+            font-size: 17px;
+            line-height: 1.55;
+        }
+
+
+        .container {
+            width: 80%;
+            max-width: 1000px;
+            margin: auto;
+            padding-bottom: 50px;
+        }
+
+
+        .blue-line {
+            width: 52px;
+            height: 3px;
+            background-color: var(--beam);
+            margin-top: 40px;
+            margin-bottom: 12px;
+        }
+
+
+        h1 {
+            font-family: var(--mono);
+            font-size: 48px;
+            letter-spacing: 6px;
+            margin: 0;
+            font-weight: 500;
+        }
+
+
+        .full-form {
+            color: var(--paper-dim);
+        }
+
+
+        .full-form b {
+            color: var(--paper);
+            font-weight: 500;
+        }
+
+
+        .intro {
+            font-size: 19px;
+            margin-top: 18px;
+            max-width: 700px;
+        }
+
+
+        .masthead {
+            padding-bottom: 25px;
+            border-bottom: 1px solid var(--ink-line);
+            margin-bottom: 30px;
+        }
+
+
+        .cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+
+        .card {
+            background-color: var(--ink-raised);
+            padding: 20px;
+            border: 1px solid var(--ink-line);
+            border-radius: 12px;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+
+
+        .card:hover {
+            background-color: #1D2937;
+            border-color: #33465C;
+        }
+
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+
+        .card-title i {
+            font-size: 22px;
+            color: var(--beam);
+        }
+
+
+        .card h2 {
+            font-size: 21px;
+            margin-top: 0;
+            margin-bottom: 8px;
+        }
+
+
+        .card p {
+            color: var(--paper-dim);
+            font-size: 16px;
+        }
+
+
+        .example {
+            background-color: #111C28;
+            color: #A9B7C6 !important;
+            font-family: var(--mono);
+            font-size: 14px !important;
+            border-left: 3px solid var(--beam);
+            padding: 10px 12px;
+            border-radius: 4px;
+            overflow-wrap: anywhere;
+        }
+
+
+        .status {
+            color: var(--lamp-green);
+            font-family: var(--mono);
+            font-size: 13px;
+        }
+
+
+        .stats {
+            margin-top: 30px;
+            background-color: var(--ink-raised);
+            border: 1px solid var(--ink-line);
+            border-radius: 12px;
+            padding: 15px 20px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            color: var(--paper-dim);
+            font-size: 15px;
+        }
+
+
+        .stats-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+
+        .stats-count {
+            display: flex;
+            gap: 20px;
+            font-family: var(--mono);
+        }
+
+
+        .stats-count b {
+            color: var(--paper);
+        }
+
+
+        .danger b {
+            color: var(--lamp-red);
+        }
+
+
+        .suspicious b {
+            color: var(--lamp-amber);
+        }
+
+
+        .safe b {
+            color: var(--lamp-green);
+        }
+
+
+        .disclaimer {
+            color: var(--paper-dim);
+            font-size: 14px;
+            margin-top: 20px;
+            max-width: 700px;
+        }
+
+
+        .analyzer-page {
+            display: none;
+            max-width: 900px;
+            margin: auto;
+        }
+
+
+        .back-button {
+            background: none;
+            border: none;
+            color: var(--beam);
+            font-size: 15px;
+            cursor: pointer;
+            margin-top: 30px;
+            margin-bottom: 28px;
+            padding: 0;
+        }
+
+
+        .analyzer-header {
+            border-bottom: 1px solid var(--ink-line);
+            padding-bottom: 26px;
+            margin-bottom: 30px;
+        }
+
+
+        .analyzer-title {
+            font-family: var(--mono);
+            font-size: 38px;
+            letter-spacing: 3px;
+            margin: 0;
+        }
+
+
+        .analyzer-subtitle {
+            color: var(--paper-dim);
+            font-size: 17px;
+            max-width: 650px;
+            margin-top: 14px;
+        }
+
+
+        .input-label {
+            color: var(--paper-dim);
+            font-size: 15px;
+            margin-bottom: 8px;
+        }
+
+
+        .input-row {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+        }
+
+
+        .input-row input {
+            flex: 1;
+            min-width: 0;
+
+            background-color: var(--ink-raised);
+            color: var(--paper);
+
+            border: 1px solid var(--ink-line);
+            border-radius: 8px;
+
+            padding: 14px;
+
+            font-family: var(--mono);
+            font-size: 16px;
+        }
+
+
+        .input-row input:focus {
+            outline: 2px solid var(--beam);
+            border-color: var(--beam);
+        }
+
+
+        .analyze-button {
+            background-color: var(--beam);
+            color: var(--ink);
+
+            border: none;
+            border-radius: 8px;
+
+            padding: 13px 24px;
+
+            font-size: 16px;
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+
+        .analyze-button:hover {
+            background-color: #7CBBF0;
+        }
+
+
+        .analyze-button:disabled {
+            opacity: 0.6;
+            cursor: default;
+        }
+
+
+        .examples {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+
+        .examples > span {
+            color: var(--paper-dim);
+            font-size: 14px;
+        }
+
+
+        .example-chip {
+            background-color: var(--ink-raised);
+            color: var(--paper-dim);
+
+            border: 1px solid var(--ink-line);
+            border-radius: 20px;
+
+            padding: 6px 12px;
+
+            font-family: var(--mono);
+            font-size: 12px;
+
+            cursor: pointer;
+        }
+
+
+        .example-chip:hover {
+            border-color: var(--beam);
+            color: var(--paper);
+        }
+
+
+        .api-error {
+            display: none;
+            color: var(--lamp-red);
+            font-size: 14px;
+            margin-top: 12px;
+        }
+
+
+        .result-box {
+            display: none;
+
+            margin-top: 30px;
+
+            border: 1px solid var(--ink-line);
+            border-radius: 12px;
+
+            overflow: hidden;
+
+            background-color: var(--ink-raised);
+        }
+
+
+        .verdict-band {
+            padding: 16px 22px;
+
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+
+        .verdict-band i {
+            font-size: 26px;
+        }
+
+
+        .verdict-title {
+            margin: 0;
+            font-size: 23px;
+            font-weight: 600;
+        }
+
+
+        .verdict-reason {
+            margin: 2px 0 0;
+            font-size: 15px;
+            opacity: 0.85;
+        }
+
+
+        .score-area {
+            padding: 16px 22px;
+
+            border-bottom: 1px solid var(--ink-line);
+
+            background-color: var(--ink-raised);
+        }
+
+
+        .score-row {
+            display: flex;
+            justify-content: space-between;
+
+            color: var(--paper-dim);
+            font-size: 14px;
+
+            margin-bottom: 9px;
+        }
+
+
+        .score-number {
+            color: var(--paper);
+            font-family: var(--mono);
+        }
+
+
+        .score-track {
+            width: 100%;
+            height: 8px;
+
+            background-color: var(--ink);
+            border-radius: 10px;
+
+            overflow: hidden;
+        }
+
+
+        .score-fill {
+            width: 0%;
+            height: 100%;
+
+            border-radius: 10px;
+
+            transition: width 0.5s ease;
+        }
+
+
+        .threshold-text {
+            color: var(--paper-dim);
+            font-size: 12px;
+            margin-bottom: 0;
+        }
+
+
+        .result-details {
+            padding: 16px 22px;
+            background-color: var(--ink-raised);
+        }
+
+
+        .result-details h3 {
+            margin: 0 0 10px;
+
+            color: var(--paper-dim);
+
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+
+        .notes-heading {
+            margin-top: 20px !important;
+            padding-top: 16px;
+            border-top: 1px solid var(--ink-line);
+        }
+
+
+        .result-item {
+            display: flex;
+            gap: 9px;
+
+            padding: 8px 0;
+
+            border-top: 1px solid var(--ink-line);
+
+            font-size: 15px;
+        }
+
+
+        .result-item:first-of-type {
+            border-top: none;
+        }
+
+
+        .warning-item i {
+            color: var(--lamp-red);
+            margin-top: 3px;
+        }
+
+
+        .note-item {
+            color: var(--paper-dim);
+        }
+
+
+        .note-item i {
+            color: var(--lamp-green);
+            margin-top: 3px;
+        }
+
+
+        .empty-message {
+            color: var(--paper-dim);
+            font-size: 14px;
+            margin: 0;
+        }
+
+
+        .summary {
+            padding: 14px 22px;
+
+            background-color: var(--ink);
+
+            display: flex;
+            gap: 10px;
+
+            color: var(--paper-dim);
+
+            font-size: 15px;
+        }
+
+
+        .summary i {
+            font-size: 18px;
+            margin-top: 2px;
+        }
+
+
+        .analyzer-note {
+            color: var(--paper-dim);
+
+            font-size: 14px;
+
+            max-width: 650px;
+
+            margin-top: 35px;
+        }
+
+
+        @media (max-width: 750px) {
+
+            .container {
+                width: 90%;
+            }
+
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+
+            .input-row {
+                flex-direction: column;
+            }
+
+
+            .stats {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+
+            .stats-count {
+                gap: 12px;
+                flex-wrap: wrap;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <div id="home-page">
+
+
+        <header>
+
+
+            <div class="masthead">
+
+                <div class="blue-line"></div>
+
+                <h1>PARAKH</h1>
+
+
+                <p class="full-form">
+
+                    <b>P</b>ublic
+                    <b>A</b>nalysis and
+                    <b>R</b>eliability
+
+                    <b>A</b>ssessment for
+                    <b>K</b>nowledge and
+                    <b>H</b>onesty
+
+                </p>
+
+
+                <p class="intro">
+
+                    Four checks for the things that arrive uninvited -
+                    a headline, a link, a message, a payment request.
+
+                </p>
+
+            </div>
+
+
+            <div class="cards">
+
+
+                <div class="card" id="news-card">
+
+                    <div class="card-title">
+
+                        <i class="ti ti-news"></i>
+
+                        <h2>News Analyzer</h2>
+
+                    </div>
+
+
+                    <p>
+                        Check a news headline for suspicious signals
+                    </p>
+
+
+                    <p class="example">
+                        SHOCKING truth doctors don't want you to know
+                    </p>
+
+
+                    <span class="status">
+                        working
+                    </span>
+
+                </div>
+
+
+
+                <div class="card" id="url-card">
+
+                    <div class="card-title">
+
+                        <i class="ti ti-link"></i>
+
+                        <h2>URL Analyzer</h2>
+
+                    </div>
+
+
+                    <p>
+                        Check a website link for suspicious signs
+                    </p>
+
+
+                    <p class="example">
+                        sbi-kyc.rewards-login.xyz
+                    </p>
+
+
+                    <span class="status">
+                        working
+                    </span>
+
+                </div>
+
+
+
+                <div class="card" id="scam-card">
+
+                    <div class="card-title">
+
+                        <i class="ti ti-message"></i>
+
+                        <h2>Scam Message Analyzer</h2>
+
+                    </div>
+
+
+                    <p>
+                        Check a message for common scam patterns
+                    </p>
+
+
+                    <p class="example">
+                        Your account will be blocked in 2 hours. Share OTP now to verify.
+                    </p>
+
+
+                    <span class="status">
+                        working
+                    </span>
+
+                </div>
+
+
+
+                <div class="card" id="upi-card">
+
+                    <div class="card-title">
+
+                        <i class="ti ti-wallet"></i>
+
+                        <h2>UPI ID Analyzer</h2>
+
+                    </div>
+
+
+                    <p>
+                        Check a UPI ID for suspicious patterns
+                    </p>
+
+
+                    <p class="example">
+                        refund.support@oksbl
+                    </p>
+
+
+                    <span class="status">
+                        working
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="stats">
+
+
+                <span class="stats-label">
+
+                    <i class="ti ti-history"></i>
+
+                    Checked today
+
+                </span>
+
+
+                <div class="stats-count">
+
+
+                    <span>
+
+                        <b id="stat-total">0</b>
+                        total
+
+                    </span>
+
+
+                    <span class="danger">
+
+                        <b id="stat-danger">0</b>
+                        dangerous
+
+                    </span>
+
+
+                    <span class="suspicious">
+
+                        <b id="stat-suspicious">0</b>
+                        suspicious
+
+                    </span>
+
+
+                    <span class="safe">
+
+                        <b id="stat-safe">0</b>
+                        safe
+
+                    </span>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <p class="disclaimer">
+
+                PARAKH checks the information you provide for suspicious patterns.
+                A low-risk result does not guarantee that something is completely safe.
+
+            </p>
+
+
+        </header>
+
+
+    </div>
+
+
+
+    <div class="analyzer-page" id="news-analyzer">
+
+
+        <button class="back-button" id="news-back">
+            ← All checks
+        </button>
+
+
+        <div class="analyzer-header">
+
+            <div class="blue-line"></div>
+
+            <h2 class="analyzer-title">
+                News Analyzer
+            </h2>
+
+            <p class="analyzer-subtitle">
+
+                Checks a headline for misleading language,
+                extreme claims and suspicious wording.
+
+            </p>
+
+        </div>
+
+
+        <p class="input-label">
+            Enter a news headline
+        </p>
+
+
+        <div class="input-row">
+
+            <input
+                id="news-input"
+                type="text"
+                placeholder="Paste a headline here"
+            >
+
+            <button
+                class="analyze-button"
+                id="news-analyze"
+            >
+                Analyze
+            </button>
+
+        </div>
+
+
+        <div class="examples">
+
+            <span>Try:</span>
+
+            <button class="example-chip">
+                BREAKING: Miracle cure discovered overnight
+            </button>
+
+            <button class="example-chip">
+                Government confirms new education policy
+            </button>
+
+            <button class="example-chip">
+                SHOCKING truth doctors don't want you to know
+            </button>
+
+        </div>
+
+
+        <p class="api-error" id="news-error"></p>
+
+
+        <div class="result-box" id="news-result">
+
+
+            <div class="verdict-band" id="news-verdict-band">
+
+                <i
+                    class="ti ti-alert-circle"
+                    id="news-verdict-icon"
+                ></i>
+
+                <div>
+
+                    <p
+                        class="verdict-title"
+                        id="news-verdict"
+                    ></p>
+
+                    <p
+                        class="verdict-reason"
+                        id="news-verdict-reason"
+                    ></p>
+
+                </div>
+
+            </div>
+
+
+            <div class="score-area">
+
+                <div class="score-row">
+
+                    <span>
+                        Suspicion score
+                    </span>
+
+                    <span
+                        class="score-number"
+                        id="news-score"
+                    ></span>
+
+                </div>
+
+
+                <div class="score-track">
+
+                    <div
+                        class="score-fill"
+                        id="news-score-fill"
+                    ></div>
+
+                </div>
+
+
+                <p class="threshold-text">
+                    Low risk: 0–19 &nbsp; Suspicious: 20–59 &nbsp; Dangerous: 60+
+                </p>
+
+            </div>
+
+
+            <div class="result-details">
+
+                <div id="news-warnings"></div>
+
+                <div id="news-notes"></div>
+
+            </div>
+
+
+            <div class="summary">
+
+                <i class="ti ti-info-circle"></i>
+
+                <span id="news-summary"></span>
+
+            </div>
+
+
+        </div>
+
+
+        <p class="analyzer-note">
+
+            PARAKH checks the wording and signals in the headline.
+            It does not automatically prove whether a news story is true or false.
+
+        </p>
+
+
+    </div>
+
+
+
+    <div class="analyzer-page" id="url-analyzer">
+
+
+        <button class="back-button" id="url-back">
+            ← All checks
+        </button>
+
+
+        <div class="analyzer-header">
+
+            <div class="blue-line"></div>
+
+            <h2 class="analyzer-title">
+                URL Analyzer
+            </h2>
+
+            <p class="analyzer-subtitle">
+
+                Checks a website link for suspicious domains,
+                spelling tricks and risky patterns.
+
+            </p>
+
+        </div>
+
+
+        <p class="input-label">
+            Enter a website link
+        </p>
+
+
+        <div class="input-row">
+
+            <input
+                id="url-input"
+                type="text"
+                placeholder="Paste a website link here"
+            >
+
+            <button
+                class="analyze-button"
+                id="url-analyze"
+            >
+                Analyze
+            </button>
+
+        </div>
+
+
+        <div class="examples">
+
+            <span>Try:</span>
+
+            <button class="example-chip">
+                google.com
+            </button>
+
+            <button class="example-chip">
+                sbi-kyc-update.xyz
+            </button>
+
+            <button class="example-chip">
+                amaz0n-security-login.com
+            </button>
+
+        </div>
+
+
+        <p class="api-error" id="url-error"></p>
+
+
+        <div class="result-box" id="url-result">
+
+
+            <div class="verdict-band" id="url-verdict-band">
+
+                <i
+                    class="ti ti-alert-circle"
+                    id="url-verdict-icon"
+                ></i>
+
+                <div>
+
+                    <p
+                        class="verdict-title"
+                        id="url-verdict"
+                    ></p>
+
+                    <p
+                        class="verdict-reason"
+                        id="url-verdict-reason"
+                    ></p>
+
+                </div>
+
+            </div>
+
+
+            <div class="score-area">
+
+                <div class="score-row">
+
+                    <span>
+                        Suspicion score
+                    </span>
+
+                    <span
+                        class="score-number"
+                        id="url-score"
+                    ></span>
+
+                </div>
+
+
+                <div class="score-track">
+
+                    <div
+                        class="score-fill"
+                        id="url-score-fill"
+                    ></div>
+
+                </div>
+
+
+                <p class="threshold-text">
+                    Low risk: 0–19 &nbsp; Suspicious: 20–59 &nbsp; Dangerous: 60+
+                </p>
+
+            </div>
+
+
+            <div class="result-details">
+
+                <div id="url-warnings"></div>
+
+                <div id="url-notes"></div>
+
+            </div>
+
+
+            <div class="summary">
+
+                <i class="ti ti-info-circle"></i>
+
+                <span id="url-summary"></span>
+
+            </div>
+
+
+        </div>
+
+
+        <p class="analyzer-note">
+
+            PARAKH checks the URL for suspicious patterns.
+            A normal-looking link can still lead to an unsafe website.
+
+        </p>
+
+
+    </div>
+
+
+
+    <div class="analyzer-page" id="scam-analyzer">
+
+
+        <button class="back-button" id="scam-back">
+            ← All checks
+        </button>
+
+
+        <div class="analyzer-header">
+
+            <div class="blue-line"></div>
+
+            <h2 class="analyzer-title">
+                Scam Message Analyzer
+            </h2>
+
+            <p class="analyzer-subtitle">
+
+                Looks for urgency, prize claims, OTP requests
+                and other common scam signals.
+
+            </p>
+
+        </div>
+
+
+        <p class="input-label">
+            Enter a suspicious message
+        </p>
+
+
+        <div class="input-row">
+
+            <input
+                id="scam-input"
+                type="text"
+                placeholder="Paste a message here"
+            >
+
+            <button
+                class="analyze-button"
+                id="scam-analyze"
+            >
+                Analyze
+            </button>
+
+        </div>
+
+
+        <div class="examples">
+
+            <span>Try:</span>
+
+            <button class="example-chip">
+                You won ₹50,000! Claim now
+            </button>
+
+            <button class="example-chip">
+                Your account expires today. Send OTP now
+            </button>
+
+            <button class="example-chip">
+                Your parcel will arrive tomorrow
+            </button>
+
+        </div>
+
+
+        <p class="api-error" id="scam-error"></p>
+
+
+        <div class="result-box" id="scam-result">
+
+
+            <div class="verdict-band" id="scam-verdict-band">
+
+                <i
+                    class="ti ti-alert-circle"
+                    id="scam-verdict-icon"
+                ></i>
+
+                <div>
+
+                    <p
+                        class="verdict-title"
+                        id="scam-verdict"
+                    ></p>
+
+                    <p
+                        class="verdict-reason"
+                        id="scam-verdict-reason"
+                    ></p>
+
+                </div>
+
+            </div>
+
+
+            <div class="score-area">
+
+                <div class="score-row">
+
+                    <span>
+                        Suspicion score
+                    </span>
+
+                    <span
+                        class="score-number"
+                        id="scam-score"
+                    ></span>
+
+                </div>
+
+
+                <div class="score-track">
+
+                    <div
+                        class="score-fill"
+                        id="scam-score-fill"
+                    ></div>
+
+                </div>
+
+
+                <p class="threshold-text">
+                    Low risk: 0–19 &nbsp; Suspicious: 20–59 &nbsp; Dangerous: 60+
+                </p>
+
+            </div>
+
+
+            <div class="result-details">
+
+                <div id="scam-warnings"></div>
+
+                <div id="scam-notes"></div>
+
+            </div>
+
+
+            <div class="summary">
+
+                <i class="ti ti-info-circle"></i>
+
+                <span id="scam-summary"></span>
+
+            </div>
+
+
+        </div>
+
+
+        <p class="analyzer-note">
+
+            PARAKH checks the message for common scam patterns.
+            A message with no warning signs is not automatically trustworthy.
+
+        </p>
+
+
+    </div>
+
+
+
+    <div class="analyzer-page" id="upi-analyzer">
+
+
+        <button class="back-button" id="upi-back">
+            ← All checks
+        </button>
+
+
+        <div class="analyzer-header">
+
+            <div class="blue-line"></div>
+
+            <h2 class="analyzer-title">
+                UPI ID Analyzer
+            </h2>
+
+            <p class="analyzer-subtitle">
+
+                Checks UPI handles for suspicious wording,
+                fake-looking handles and lookalike patterns.
+
+            </p>
+
+        </div>
+
+
+        <p class="input-label">
+            Enter a UPI ID
+        </p>
+
+
+        <div class="input-row">
+
+            <input
+                id="upi-input"
+                type="text"
+                placeholder="name@handle"
+            >
+
+            <button
+                class="analyze-button"
+                id="upi-analyze"
+            >
+                Analyze
+            </button>
+
+        </div>
+
+
+        <div class="examples">
+
+            <span>Try:</span>
+
+            <button class="example-chip">
+                rahul@oksbi
+            </button>
+
+            <button class="example-chip">
+                refund.support@oksbl
+            </button>
+
+            <button class="example-chip">
+                rahul@okscambank
+            </button>
+
+        </div>
+
+
+        <p class="api-error" id="upi-error"></p>
+
+
+        <div class="result-box" id="upi-result">
+
+
+            <div class="verdict-band" id="upi-verdict-band">
+
+                <i
+                    class="ti ti-alert-circle"
+                    id="upi-verdict-icon"
+                ></i>
+
+                <div>
+
+                    <p
+                        class="verdict-title"
+                        id="upi-verdict"
+                    ></p>
+
+                    <p
+                        class="verdict-reason"
+                        id="upi-verdict-reason"
+                    ></p>
+
+                </div>
+
+            </div>
+
+
+            <div class="score-area">
+
+                <div class="score-row">
+
+                    <span>
+                        Suspicion score
+                    </span>
+
+                    <span
+                        class="score-number"
+                        id="upi-score"
+                    ></span>
+
+                </div>
+
+
+                <div class="score-track">
+
+                    <div
+                        class="score-fill"
+                        id="upi-score-fill"
+                    ></div>
+
+                </div>
+
+
+                <p class="threshold-text">
+                    Low risk: 0–19 &nbsp; Suspicious: 20–59 &nbsp; Dangerous: 60+
+                </p>
+
+            </div>
+
+
+            <div class="result-details">
+
+                <div id="upi-warnings"></div>
+
+                <div id="upi-notes"></div>
+
+            </div>
+
+
+            <div class="summary">
+
+                <i class="ti ti-info-circle"></i>
+
+                <span id="upi-summary"></span>
+
+            </div>
+
+
+        </div>
+
+
+        <p class="analyzer-note">
+
+            PARAKH checks only the UPI ID you enter.
+            A clean-looking ID can still belong to a fraudster.
+
+        </p>
+
+
+    </div>
+
+
+</div>
+
+
+
+<script>
+
+    var totalChecks = 0;
+    var dangerousChecks = 0;
+    var suspiciousChecks = 0;
+    var safeChecks = 0;
+
+
+
+    function openAnalyzer(name) {
+
+        document.getElementById("home-page").style.display = "none";
+
+
+        var pages = document.querySelectorAll(".analyzer-page");
+
+
+        pages.forEach(function(page) {
+
+            page.style.display = "none";
+
+        });
+
+
+        document.getElementById(name + "-analyzer").style.display = "block";
+
+
+        window.scrollTo(0, 0);
+
+    }
+
+
+
+    function goHome() {
+
+        var pages = document.querySelectorAll(".analyzer-page");
+
+
+        pages.forEach(function(page) {
+
+            page.style.display = "none";
+
+        });
+
+
+        document.getElementById("home-page").style.display = "block";
+
+
+        window.scrollTo(0, 0);
+
+    }
+
+
+
+    document.getElementById("news-card").onclick = function() {
+
+        openAnalyzer("news");
+
+    };
+
+
+    document.getElementById("url-card").onclick = function() {
+
+        openAnalyzer("url");
+
+    };
+
+
+    document.getElementById("scam-card").onclick = function() {
+
+        openAnalyzer("scam");
+
+    };
+
+
+    document.getElementById("upi-card").onclick = function() {
+
+        openAnalyzer("upi");
+
+    };
+
+
+
+    document.getElementById("news-back").onclick = goHome;
+
+    document.getElementById("url-back").onclick = goHome;
+
+    document.getElementById("scam-back").onclick = goHome;
+
+    document.getElementById("upi-back").onclick = goHome;
+
+
+
+    document.querySelectorAll(".example-chip").forEach(function(chip) {
+
+        chip.onclick = function() {
+
+            var analyzerPage = chip.closest(".analyzer-page");
+
+            var inputBox = analyzerPage.querySelector("input");
+
+            inputBox.value = chip.textContent.trim();
+
+            inputBox.focus();
+
+        };
+
+    });
+
+
+
+    function getResultStyle(score) {
+
+        if (score >= 60) {
+
+            return {
+                color: "#FF6B5E",
+                background: "#2C1512",
+                icon: "ti ti-alert-triangle",
+                reason: "Strong warning signs were detected"
+            };
+
+        }
+
+
+        if (score >= 20) {
+
+            return {
+                color: "#F5B23D",
+                background: "#2B2110",
+                icon: "ti ti-alert-circle",
+                reason: "Something here deserves a closer look"
+            };
+
+        }
+
+
+        return {
+            color: "#4FD08A",
+            background: "#122417",
+            icon: "ti ti-circle-check",
+            reason: "No major warning signs were detected"
+        };
+
+    }
+
+
+
+    function renderWarnings(prefix, warnings) {
+
+        var box = document.getElementById(prefix + "-warnings");
+
+        box.innerHTML = "";
+
+
+        var heading = document.createElement("h3");
+
+
+        if (warnings.length === 0) {
+
+            heading.textContent = "Warning signs";
+
+            box.appendChild(heading);
+
+
+            var empty = document.createElement("p");
+
+            empty.className = "empty-message";
+
+            empty.textContent = "No warning signs detected.";
+
+            box.appendChild(empty);
+
+
+            return;
+
+        }
+
+
+        heading.textContent =
+            warnings.length +
+            (warnings.length === 1 ? " warning sign" : " warning signs");
+
+
+        box.appendChild(heading);
+
+
+        warnings.forEach(function(warning) {
+
+            var row = document.createElement("div");
+
+            row.className = "result-item warning-item";
+
+
+            var icon = document.createElement("i");
+
+            icon.className = "ti ti-alert-circle";
+
+
+            var text = document.createElement("span");
+
+            text.textContent = warning;
+
+
+            row.appendChild(icon);
+
+            row.appendChild(text);
+
+            box.appendChild(row);
+
+        });
+
+    }
+
+
+
+    function renderNotes(prefix, notes) {
+
+        var box = document.getElementById(prefix + "-notes");
+
+        box.innerHTML = "";
+
+
+        if (!notes || notes.length === 0) {
+
+            return;
+
+        }
+
+
+        var heading = document.createElement("h3");
+
+        heading.className = "notes-heading";
+
+        heading.textContent = "Checks and notes";
+
+
+        box.appendChild(heading);
+
+
+        notes.forEach(function(note) {
+
+            var row = document.createElement("div");
+
+            row.className = "result-item note-item";
+
+
+            var icon = document.createElement("i");
+
+            icon.className = "ti ti-check";
+
+
+            var text = document.createElement("span");
+
+            text.textContent = note;
+
+
+            row.appendChild(icon);
+
+            row.appendChild(text);
+
+            box.appendChild(row);
+
+        });
+
+    }
+
+
+
+    function updateStats(score) {
+
+        totalChecks += 1;
+
+
+        if (score >= 60) {
+
+            dangerousChecks += 1;
+
+        }
+
+        else if (score >= 20) {
+
+            suspiciousChecks += 1;
+
+        }
+
+        else {
+
+            safeChecks += 1;
+
+        }
+
+
+        document.getElementById("stat-total").textContent =
+            totalChecks;
+
+
+        document.getElementById("stat-danger").textContent =
+            dangerousChecks;
+
+
+        document.getElementById("stat-suspicious").textContent =
+            suspiciousChecks;
+
+
+        document.getElementById("stat-safe").textContent =
+            safeChecks;
+
+    }
+
+
+
+    function renderResult(prefix, result) {
+
+        var score = Number(result.suspicion_score || 0);
+
+
+        if (score > 100) {
+            score = 100;
+        }
+
+
+        if (score < 0) {
+            score = 0;
+        }
+
+
+        var style = getResultStyle(score);
+
+
+        var resultBox =
+            document.getElementById(prefix + "-result");
+
+
+        var verdictBand =
+            document.getElementById(prefix + "-verdict-band");
+
+
+        var verdictIcon =
+            document.getElementById(prefix + "-verdict-icon");
+
+
+        var verdict =
+            document.getElementById(prefix + "-verdict");
+
+
+        var verdictReason =
+            document.getElementById(prefix + "-verdict-reason");
+
+
+        var scoreText =
+            document.getElementById(prefix + "-score");
+
+
+        var scoreFill =
+            document.getElementById(prefix + "-score-fill");
+
+
+        resultBox.style.display = "block";
+
+
+        verdictBand.style.backgroundColor =
+            style.background;
+
+
+        verdictBand.style.color =
+            style.color;
+
+
+        verdictIcon.className =
+            style.icon;
+
+
+        verdict.textContent =
+            result.label || "Check completed";
+
+
+        verdictReason.textContent =
+            style.reason;
+
+
+        scoreText.textContent =
+            score + " / 100";
+
+
+        scoreFill.style.backgroundColor =
+            style.color;
+
+
+        scoreFill.style.width =
+            "0%";
+
+
+        setTimeout(function() {
+
+            scoreFill.style.width =
+                score + "%";
+
+        }, 40);
+
+
+        renderWarnings(
+            prefix,
+            result.warnings || []
+        );
+
+
+        renderNotes(
+            prefix,
+            result.notes || []
+        );
+
+
+        document.getElementById(prefix + "-summary").textContent =
+            result.summary || "Check completed.";
+
+
+        updateStats(score);
+
+    }
+
+
+
+    async function analyzeModule(config) {
+
+        var input =
+            document.getElementById(config.input);
+
+
+        var button =
+            document.getElementById(config.button);
+
+
+        var errorBox =
+            document.getElementById(config.prefix + "-error");
+
+
+        var value =
+            input.value.trim();
+
+
+        errorBox.style.display = "none";
+
+        errorBox.textContent = "";
+
+
+        if (value === "") {
+
+            errorBox.textContent =
+                config.emptyMessage;
+
+
+            errorBox.style.display =
+                "block";
+
+
+            input.focus();
+
+
+            return;
+
+        }
+
+
+        var originalText =
+            button.textContent;
+
+
+        button.disabled = true;
+
+        button.textContent = "Checking...";
+
+
+        try {
+
+
+            var requestBody = {};
+
+
+            requestBody[config.field] =
+                value;
+
+
+            var response = await fetch(
+                config.endpoint,
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify(requestBody)
+                }
+            );
+
+
+            var result =
+                await response.json();
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    result.error ||
+                    "The check could not be completed."
+                );
+
+            }
+
+
+            renderResult(
+                config.prefix,
+                result
+            );
+
+        }
+
+
+        catch (error) {
+
+            errorBox.textContent =
+                error.message;
+
+
+            errorBox.style.display =
+                "block";
+
+        }
+
+
+        finally {
+
+            button.disabled = false;
+
+            button.textContent = originalText;
+
+        }
+
+    }
+
+
+
+    var analyzers = [
+
+
+        {
+            prefix: "news",
+
+            input: "news-input",
+
+            button: "news-analyze",
+
+            endpoint: "/api/news",
+
+            field: "headline",
+
+            emptyMessage: "Enter a headline first."
+        },
+
+
+        {
+            prefix: "url",
+
+            input: "url-input",
+
+            button: "url-analyze",
+
+            endpoint: "/api/url",
+
+            field: "url",
+
+            emptyMessage: "Enter a URL first."
+        },
+
+
+        {
+            prefix: "scam",
+
+            input: "scam-input",
+
+            button: "scam-analyze",
+
+            endpoint: "/api/scam",
+
+            field: "message",
+
+            emptyMessage: "Enter a message first."
+        },
+
+
+        {
+            prefix: "upi",
+
+            input: "upi-input",
+
+            button: "upi-analyze",
+
+            endpoint: "/api/upi",
+
+            field: "upi_id",
+
+            emptyMessage: "Enter a UPI ID first."
+        }
+
+
+    ];
+
+
+
+    analyzers.forEach(function(config) {
+
+
+        document.getElementById(config.button).onclick = function() {
+
+            analyzeModule(config);
+
+        };
+
+
+        document.getElementById(config.input).addEventListener(
+            "keydown",
+            function(event) {
+
+                if (event.key === "Enter") {
+
+                    analyzeModule(config);
+
+                }
+
+            }
+        );
+
+    });
+
+
+</script>
+
+
+</body>
+
+</html>

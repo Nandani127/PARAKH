@@ -1,0 +1,6 @@
+Flask
+gunicorn
+requests
+vaderSentiment
+phonenumbers
+urlextract
