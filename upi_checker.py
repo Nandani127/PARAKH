@@ -1,8 +1,15 @@
 def how_different(word1, word2):
+
     word1 = word1.lower()
+
     word2 = word2.lower()
 
-    if abs(len(word1) - len(word2)) > 2:
+    length_difference = abs(
+        len(word1) - len(word2)
+    )
+
+    if length_difference > 2:
+
         return 99
 
     rows = []
@@ -12,14 +19,17 @@ def how_different(word1, word2):
         row = []
 
         for j in range(len(word2) + 1):
+
             row.append(0)
 
         rows.append(row)
 
     for i in range(len(word1) + 1):
+
         rows[i][0] = i
 
     for j in range(len(word2) + 1):
+
         rows[0][j] = j
 
     for i in range(1, len(word1) + 1):
@@ -27,9 +37,11 @@ def how_different(word1, word2):
         for j in range(1, len(word2) + 1):
 
             if word1[i - 1] == word2[j - 1]:
+
                 same = 0
 
             else:
+
                 same = 1
 
             rows[i][j] = min(
@@ -42,9 +54,13 @@ def how_different(word1, word2):
 
 
 def check_upi(upi_id):
+
     suspicion_score = 0
+
     warning_count = 0
+
     warnings = []
+
     notes = []
 
     upi_id = upi_id.strip()
@@ -54,17 +70,22 @@ def check_upi(upi_id):
         parts = upi_id.split("@")
 
         name_part = parts[0].strip()
+
         domain_part = parts[1].strip()
 
         if name_part == "" or domain_part == "":
 
-            warnings.append("Name or handle is empty")
+            warnings.append(
+                "Name or handle is empty"
+            )
 
             warning_count += 1
 
         else:
 
-            notes.append("Name and handle are present")
+            notes.append(
+                "Name and handle are present"
+            )
 
         if upi_id.count("@") > 1:
 
@@ -73,11 +94,14 @@ def check_upi(upi_id):
             )
 
             warning_count += 1
+
             suspicion_score += 60
 
         else:
 
-            notes.append("Single @ symbol")
+            notes.append(
+                "Single @ symbol"
+            )
 
         if " " in upi_id:
 
@@ -86,11 +110,14 @@ def check_upi(upi_id):
             )
 
             warning_count += 1
+
             suspicion_score += 10
 
         else:
 
-            notes.append("No spaces in the UPI ID")
+            notes.append(
+                "No spaces in the UPI ID"
+            )
 
         extra_punctuation = [
             "!",
@@ -122,7 +149,10 @@ def check_upi(upi_id):
             if letter in extra_punctuation:
 
                 if letter not in found_punctuation:
-                    found_punctuation.append(letter)
+
+                    found_punctuation.append(
+                        letter
+                    )
 
         if found_punctuation:
 
@@ -132,17 +162,21 @@ def check_upi(upi_id):
             )
 
             warning_count += 1
+
             suspicion_score += 15
 
         else:
 
-            notes.append("No extra punctuation found")
+            notes.append(
+                "No extra punctuation found"
+            )
 
         punctuation_count = 0
 
         for letter in name_part:
 
             if letter == "." or letter == "-":
+
                 punctuation_count += 1
 
         if punctuation_count > 2:
@@ -152,11 +186,14 @@ def check_upi(upi_id):
             )
 
             warning_count += 1
+
             suspicion_score += 10
 
         else:
 
-            notes.append("Name punctuation looks normal")
+            notes.append(
+                "Name punctuation looks normal"
+            )
 
         known_handles = [
             "oksbi",
@@ -254,7 +291,7 @@ def check_upi(upi_id):
             "yespaychota",
             "fkaxis",
             "zoicici",
-            "pz",
+            "pz"
         ]
 
         if domain_part != "":
@@ -264,6 +301,7 @@ def check_upi(upi_id):
             if domain_lower not in known_handles:
 
                 lookalike_found = False
+
                 lookalike_handle = ""
 
                 for handle in known_handles:
@@ -276,7 +314,9 @@ def check_upi(upi_id):
                     if difference >= 1 and difference <= 2:
 
                         lookalike_found = True
+
                         lookalike_handle = handle
+
                         break
 
                 if lookalike_found:
@@ -287,6 +327,7 @@ def check_upi(upi_id):
                     )
 
                     warning_count += 1
+
                     suspicion_score += 60
 
                 else:
@@ -297,6 +338,7 @@ def check_upi(upi_id):
                     )
 
                     warning_count += 1
+
                     suspicion_score += 50
 
             else:
@@ -321,7 +363,7 @@ def check_upi(upi_id):
             "hdfc",
             "icici",
             "sbi",
-            "rbi",
+            "rbi"
         ]
 
         found_scam_words = []
@@ -329,7 +371,10 @@ def check_upi(upi_id):
         for word in scam_words:
 
             if word in name_lower:
-                found_scam_words.append(word)
+
+                found_scam_words.append(
+                    word
+                )
 
         if found_scam_words:
 
@@ -339,6 +384,7 @@ def check_upi(upi_id):
             )
 
             warning_count += 1
+
             suspicion_score += 45
 
         else:
@@ -356,6 +402,7 @@ def check_upi(upi_id):
         warning_count += 1
 
     if suspicion_score > 100:
+
         suspicion_score = 100
 
     if suspicion_score >= 50:
@@ -373,21 +420,25 @@ def check_upi(upi_id):
     if suspicion_score >= 60:
 
         label = "Highly suspicious"
+
         label_class = "high"
 
     elif suspicion_score >= 40:
 
         label = "High suspicion"
+
         label_class = "medium"
 
     elif suspicion_score >= 20:
 
         label = "Some suspicious signals"
+
         label_class = "some"
 
     else:
 
         label = "Low suspicion"
+
         label_class = "low"
 
     return {
@@ -398,7 +449,7 @@ def check_upi(upi_id):
         "summary": summary,
         "label": label,
         "label_class": label_class,
-        "checked": upi_id,
+        "checked": upi_id
     }
 
 
@@ -409,26 +460,39 @@ if __name__ == "__main__":
     print("UPI ID Checker")
     print("====================================")
 
-    upi_id = input("Enter a UPI ID: ")
+    upi_id = input(
+        "Enter a UPI ID: "
+    )
 
-    result = check_upi(upi_id)
-
-    print()
-
-    print("The ID you entered:")
-
-    print(result["checked"])
+    result = check_upi(
+        upi_id
+    )
 
     print()
 
-    print("⚠️  Warning signs found: ")
+    print(
+        "The ID you entered:"
+    )
+
+    print(
+        result["checked"]
+    )
+
+    print()
+
+    print(
+        "⚠️  Warning signs found: "
+    )
 
     print()
 
     if result["warnings"]:
 
         for warning in result["warnings"]:
-            print("⚠️  " + warning)
+
+            print(
+                "⚠️  " + warning
+            )
 
     else:
 
@@ -438,7 +502,9 @@ if __name__ == "__main__":
 
     print()
 
-    print(result["summary"])
+    print(
+        result["summary"]
+    )
 
     print()
 
@@ -455,4 +521,8 @@ if __name__ == "__main__":
         "/100"
     )
 
-    print(result["label"])
+    print()
+
+    print(
+        result["label"]
+    )

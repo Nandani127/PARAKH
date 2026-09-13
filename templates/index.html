@@ -15,7 +15,7 @@
     >
 
     <link
-        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap"
         rel="stylesheet"
     >
 
@@ -85,6 +85,48 @@
             font-weight: 500;
         }
 
+
+
+
+        .brand-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .language-toggle {
+            background-color: transparent;
+            color: var(--beam);
+            border: 1px solid var(--ink-line);
+            border-radius: 18px;
+            padding: 7px 13px;
+            font-family: var(--sans);
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            white-space: nowrap;
+        }
+
+        .language-toggle:hover {
+            border-color: var(--beam);
+            background-color: #111C28;
+        }
+
+        html[lang="hi"] body,
+        html[lang="hi"] button,
+        html[lang="hi"] input,
+        html[lang="hi"] textarea {
+            font-family: "Noto Sans Devanagari", "Nirmala UI", var(--sans);
+        }
+
+        html[lang="hi"] .example,
+        html[lang="hi"] .example-chip,
+        html[lang="hi"] .score-number,
+        html[lang="hi"] .stats-count {
+            font-family: "Noto Sans Devanagari", "Nirmala UI", var(--sans);
+        }
 
         .full-form {
             color: var(--paper-dim);
@@ -580,6 +622,51 @@
         }
 
 
+        .input-column {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .input-column input,
+        .input-column textarea,
+        .file-input {
+            width: 100%;
+            background-color: var(--ink-raised);
+            color: var(--paper);
+            border: 1px solid var(--ink-line);
+            border-radius: 8px;
+            padding: 14px;
+            font-family: var(--mono);
+            font-size: 16px;
+        }
+
+        .input-column input:focus,
+        .input-column textarea:focus,
+        .file-input:focus {
+            outline: 2px solid var(--beam);
+            border-color: var(--beam);
+        }
+
+        .input-column textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .file-row {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+            align-items: center;
+        }
+
+        .file-row .file-input {
+            flex: 1;
+            min-width: 0;
+        }
+
+
         @media (max-width: 750px) {
 
             .container {
@@ -588,12 +675,51 @@
 
 
             .cards {
-                grid-template-columns: 1fr;
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
             }
 
 
-            .input-row {
+            .card {
+                width: 100%;
+            }
+
+
+            .brand-row {
+                align-items: center;
+            }
+
+
+            h1 {
+                font-size: 36px;
+                letter-spacing: 4px;
+            }
+
+
+            .language-toggle {
+                padding: 6px 10px;
+                font-size: 12px;
+            }
+
+
+            .analyzer-title {
+                font-size: 29px;
+                letter-spacing: 1.5px;
+            }
+
+
+            .input-row,
+            .file-row {
                 flex-direction: column;
+                align-items: stretch;
+            }
+
+
+            .input-row .analyze-button,
+            .file-row .analyze-button,
+            .input-column .analyze-button {
+                width: 100%;
             }
 
 
@@ -632,7 +758,15 @@
 
                 <div class="blue-line"></div>
 
-                <h1>PARAKH</h1>
+                <div class="brand-row">
+
+                    <h1>PARAKH</h1>
+
+                    <button class="language-toggle" id="language-toggle" type="button">
+                        हिंदी
+                    </button>
+
+                </div>
 
 
                 <p class="full-form">
@@ -650,8 +784,8 @@
 
                 <p class="intro">
 
-                    Four checks for the things that arrive uninvited -
-                    a headline, a link, a message, a payment request.
+                    Six checks for the things that arrive uninvited -
+                    a headline, a link, a message, a payment request and more.
 
                 </p>
 
@@ -776,6 +910,57 @@
                 </div>
 
 
+                <div class="card" id="email-card">
+
+                    <div class="card-title">
+
+                        <i class="ti ti-mail"></i>
+
+                        <h2>Email Analyzer</h2>
+
+                    </div>
+
+                    <p>
+                        Check an email for suspicious sender and scam signals
+                    </p>
+
+                    <p class="example">
+                        PayPal Support &lt;fake@gmail.com&gt;
+                    </p>
+
+                    <span class="status">
+                        working
+                    </span>
+
+                </div>
+
+
+                <div class="card" id="apk-card">
+
+                    <div class="card-title">
+
+                        <i class="ti ti-brand-android"></i>
+
+                        <h2>APK Analyzer</h2>
+
+                    </div>
+
+                    <p>
+                        Scan an Android APK for risky permissions and known threats
+                    </p>
+
+                    <p class="example">
+                        upload an .apk file
+                    </p>
+
+                    <span class="status">
+                        working
+                    </span>
+
+                </div>
+
+
+                
             </div>
 
 
@@ -1504,11 +1689,845 @@
     </div>
 
 
+    <div class="analyzer-page" id="email-analyzer">
+
+        <button class="back-button" id="email-back">
+            ← All checks
+        </button>
+
+        <div class="analyzer-header">
+
+            <div class="blue-line"></div>
+
+            <h2 class="analyzer-title">
+                Email Analyzer
+            </h2>
+
+            <p class="analyzer-subtitle">
+                Checks the sender, subject, message wording and links for suspicious signals.
+            </p>
+
+        </div>
+
+        <div class="input-column">
+
+            <input
+                id="email-sender"
+                type="text"
+                placeholder="Sender: PayPal Support &lt;fake@gmail.com&gt;"
+            >
+
+            <input
+                id="email-subject"
+                type="text"
+                placeholder="Email subject"
+            >
+
+            <textarea
+                id="email-body"
+                placeholder="Paste the email body here"
+            ></textarea>
+
+            <button
+                class="analyze-button"
+                id="email-analyze"
+            >
+                Analyze
+            </button>
+
+        </div>
+
+        <p class="api-error" id="email-error"></p>
+
+        <div class="result-box" id="email-result">
+
+            <div class="verdict-band" id="email-verdict-band">
+
+                <i
+                    class="ti ti-alert-circle"
+                    id="email-verdict-icon"
+                ></i>
+
+                <div>
+
+                    <p
+                        class="verdict-title"
+                        id="email-verdict"
+                    ></p>
+
+                    <p
+                        class="verdict-reason"
+                        id="email-verdict-reason"
+                    ></p>
+
+                </div>
+
+            </div>
+
+            <div class="score-area">
+
+                <div class="score-row">
+
+                    <span>Suspicion score</span>
+
+                    <span
+                        class="score-number"
+                        id="email-score"
+                    ></span>
+
+                </div>
+
+                <div class="score-track">
+
+                    <div
+                        class="score-fill"
+                        id="email-score-fill"
+                    ></div>
+
+                </div>
+
+                <p class="threshold-text">
+                    Low risk: 0–19 &nbsp; Suspicious: 20–59 &nbsp; Dangerous: 60+
+                </p>
+
+            </div>
+
+            <div class="result-details">
+
+                <div id="email-warnings"></div>
+
+                <div id="email-notes"></div>
+
+            </div>
+
+            <div class="summary">
+
+                <i class="ti ti-info-circle"></i>
+
+                <span id="email-summary"></span>
+
+            </div>
+
+        </div>
+
+        <p class="analyzer-note">
+            PARAKH checks the sender and email content for common scam signals.
+            A low-risk result does not prove that an email is genuine.
+        </p>
+
+    </div>
+
+
+    <div class="analyzer-page" id="apk-analyzer">
+
+        <button class="back-button" id="apk-back">
+            ← All checks
+        </button>
+
+        <div class="analyzer-header">
+
+            <div class="blue-line"></div>
+
+            <h2 class="analyzer-title">
+                APK Analyzer
+            </h2>
+
+            <p class="analyzer-subtitle">
+                Performs static analysis of an Android APK, including permissions and a VirusTotal hash lookup.
+            </p>
+
+        </div>
+
+        <p class="input-label">
+            Choose an APK file
+        </p>
+
+        <div class="file-row">
+
+            <input
+                class="file-input"
+                id="apk-input"
+                type="file"
+                accept=".apk,application/vnd.android.package-archive"
+            >
+
+            <button
+                class="analyze-button"
+                id="apk-analyze"
+            >
+                Analyze
+            </button>
+
+        </div>
+
+        <p class="api-error" id="apk-error"></p>
+
+        <div class="result-box" id="apk-result">
+
+            <div class="verdict-band" id="apk-verdict-band">
+
+                <i
+                    class="ti ti-alert-circle"
+                    id="apk-verdict-icon"
+                ></i>
+
+                <div>
+
+                    <p
+                        class="verdict-title"
+                        id="apk-verdict"
+                    ></p>
+
+                    <p
+                        class="verdict-reason"
+                        id="apk-verdict-reason"
+                    ></p>
+
+                </div>
+
+            </div>
+
+            <div class="score-area">
+
+                <div class="score-row">
+
+                    <span>Suspicion score</span>
+
+                    <span
+                        class="score-number"
+                        id="apk-score"
+                    ></span>
+
+                </div>
+
+                <div class="score-track">
+
+                    <div
+                        class="score-fill"
+                        id="apk-score-fill"
+                    ></div>
+
+                </div>
+
+                <p class="threshold-text">
+                    Low risk: 0–19 &nbsp; Suspicious: 20–59 &nbsp; Dangerous: 60+
+                </p>
+
+            </div>
+
+            <div class="result-details">
+
+                <div id="apk-warnings"></div>
+
+                <div id="apk-notes"></div>
+
+            </div>
+
+            <div class="summary">
+
+                <i class="ti ti-info-circle"></i>
+
+                <span id="apk-summary"></span>
+
+            </div>
+
+        </div>
+
+        <p class="analyzer-note">
+            PARAKH performs static analysis only. The APK is not executed.
+        </p>
+
+    </div>
+
+
+    
 </div>
 
 
 
 <script>
+
+
+    var currentLanguage = localStorage.getItem("parakh-language") || "en";
+
+    var uiTranslations = {
+        en: {
+            fullFormHtml: "<b>P</b>ublic <b>A</b>nalysis and <b>R</b>eliability <b>A</b>ssessment for <b>K</b>nowledge and <b>H</b>onesty",
+            intro: "Six checks for the things that arrive uninvited - a headline, a link, a message, a payment request and more.",
+            newsTitle: "News Analyzer",
+            newsCardDescription: "Check a news headline for suspicious signals",
+            newsCardExample: "SHOCKING truth doctors don't want you to know",
+            urlTitle: "URL Analyzer",
+            urlCardDescription: "Check a website link for suspicious signs",
+            urlCardExample: "sbi-kyc.rewards-login.xyz",
+            scamTitle: "Scam Message Analyzer",
+            scamCardDescription: "Check a message for common scam patterns",
+            scamCardExample: "Your account will be blocked in 2 hours. Share OTP now to verify.",
+            upiTitle: "UPI ID Analyzer",
+            upiCardDescription: "Check a UPI ID for suspicious patterns",
+            upiCardExample: "refund.support@oksbl",
+            emailTitle: "Email Analyzer",
+            emailCardDescription: "Check an email for suspicious sender and scam signals",
+            emailCardExample: "PayPal Support <fake@gmail.com>",
+            apkTitle: "APK Analyzer",
+            apkCardDescription: "Scan an Android APK for risky permissions and known threats",
+            apkCardExample: "upload an .apk file",
+            working: "working",
+            checkedToday: "Checked today",
+            total: "total",
+            dangerous: "dangerous",
+            suspicious: "suspicious",
+            safe: "safe",
+            disclaimer: "PARAKH checks the information you provide for suspicious patterns. A low-risk result does not guarantee that something is completely safe.",
+            allChecks: "← All checks",
+            newsSubtitle: "Checks a headline for misleading language, extreme claims and suspicious wording.",
+            newsInputLabel: "Enter a news headline",
+            newsPlaceholder: "Paste a headline here",
+            newsExample1: "BREAKING: Miracle cure discovered overnight",
+            newsExample2: "Government confirms new education policy",
+            newsExample3: "SHOCKING truth doctors don't want you to know",
+            newsNote: "PARAKH checks the wording and signals in the headline. It does not automatically prove whether a news story is true or false.",
+            urlSubtitle: "Checks a website link for suspicious domains, spelling tricks and risky patterns.",
+            urlInputLabel: "Enter a website link",
+            urlPlaceholder: "Paste a website link here",
+            urlExample1: "google.com",
+            urlExample2: "sbi-kyc-update.xyz",
+            urlExample3: "amaz0n-security-login.com",
+            urlNote: "PARAKH checks the URL for suspicious patterns. A normal-looking link can still lead to an unsafe website.",
+            scamSubtitle: "Looks for urgency, prize claims, OTP requests and other common scam signals.",
+            scamInputLabel: "Enter a suspicious message",
+            scamPlaceholder: "Paste a message here",
+            scamExample1: "You won ₹50,000! Claim now",
+            scamExample2: "Your account expires today. Send OTP now",
+            scamExample3: "Your parcel will arrive tomorrow",
+            scamNote: "PARAKH checks the message for common scam patterns. A message with no warning signs is not automatically trustworthy.",
+            upiSubtitle: "Checks UPI handles for suspicious wording, fake-looking handles and lookalike patterns.",
+            upiInputLabel: "Enter a UPI ID",
+            upiPlaceholder: "name@handle",
+            upiExample1: "rahul@oksbi",
+            upiExample2: "refund.support@oksbl",
+            upiExample3: "rahul@okscambank",
+            upiNote: "PARAKH checks only the UPI ID you enter. A clean-looking ID can still belong to a fraudster.",
+            emailSubtitle: "Checks the sender, subject, message wording and links for suspicious signals.",
+            emailSenderPlaceholder: "Sender: PayPal Support <fake@gmail.com>",
+            emailSubjectPlaceholder: "Email subject",
+            emailBodyPlaceholder: "Paste the email body here",
+            emailNote: "PARAKH checks the sender and email content for common scam signals. A low-risk result does not prove that an email is genuine.",
+            apkSubtitle: "Performs static analysis of an Android APK, including permissions and a VirusTotal hash lookup.",
+            apkInputLabel: "Choose an APK file",
+            apkNote: "PARAKH performs static analysis only. The APK is not executed.",
+            tryLabel: "Try:",
+            analyze: "Analyze",
+            checking: "Checking...",
+            suspicionScore: "Suspicion score",
+            threshold: "Low risk: 0–19   Suspicious: 20–59   Dangerous: 60+",
+            warningSigns: "Warning signs",
+            noWarningSigns: "No warning signs detected.",
+            checksAndNotes: "Checks and notes",
+            checkCompleted: "Check completed",
+            checkCompletedPeriod: "Check completed.",
+            enterHeadline: "Enter a headline first.",
+            enterUrl: "Enter a URL first.",
+            enterMessage: "Enter a message first.",
+            enterUpi: "Enter a UPI ID first.",
+            enterSender: "Enter the sender email first.",
+            enterEmailBody: "Enter the email body first.",
+            chooseApk: "Choose an APK file first.",
+            validApk: "Please choose a valid .apk file.",
+            checkFailed: "The check could not be completed.",
+            emailCheckFailed: "The email check could not be completed.",
+            apkCheckFailed: "The APK check could not be completed."
+        },
+        hi: {
+            fullFormHtml: "जन-सूचना के विश्लेषण, विश्वसनीयता, ज्ञान और सत्यता का आकलन",
+            intro: "अनचाही चीज़ों की जाँच के लिए छह मॉड्यूल — खबर, लिंक, संदेश, भुगतान अनुरोध और बहुत कुछ।",
+            newsTitle: "समाचार विश्लेषक",
+            newsCardDescription: "समाचार शीर्षक में संदिग्ध संकेतों की जाँच करें",
+            newsCardExample: "चौंकाने वाला सच जो डॉक्टर नहीं चाहते कि आप जानें",
+            urlTitle: "URL विश्लेषक",
+            urlCardDescription: "वेबसाइट लिंक में संदिग्ध संकेतों की जाँच करें",
+            urlCardExample: "sbi-kyc.rewards-login.xyz",
+            scamTitle: "धोखाधड़ी संदेश विश्लेषक",
+            scamCardDescription: "संदेश में आम धोखाधड़ी पैटर्न की जाँच करें",
+            scamCardExample: "आपका खाता 2 घंटे में बंद हो जाएगा। सत्यापन के लिए OTP साझा करें।",
+            upiTitle: "UPI ID विश्लेषक",
+            upiCardDescription: "UPI ID में संदिग्ध पैटर्न की जाँच करें",
+            upiCardExample: "refund.support@oksbl",
+            emailTitle: "ईमेल विश्लेषक",
+            emailCardDescription: "संदिग्ध प्रेषक और धोखाधड़ी संकेतों के लिए ईमेल जाँचें",
+            emailCardExample: "PayPal Support <fake@gmail.com>",
+            apkTitle: "APK विश्लेषक",
+            apkCardDescription: "जोखिमपूर्ण अनुमतियों और ज्ञात खतरों के लिए Android APK स्कैन करें",
+            apkCardExample: ".apk फ़ाइल अपलोड करें",
+            working: "कार्यरत",
+            checkedToday: "आज की जाँचें",
+            total: "कुल",
+            dangerous: "खतरनाक",
+            suspicious: "संदिग्ध",
+            safe: "सुरक्षित",
+            disclaimer: "PARAKH आपके द्वारा दी गई जानकारी में संदिग्ध पैटर्न की जाँच करता है। कम जोखिम वाला परिणाम किसी चीज़ के पूरी तरह सुरक्षित होने की गारंटी नहीं है।",
+            allChecks: "← सभी जाँच",
+            newsSubtitle: "भ्रामक भाषा, बढ़ा-चढ़ाकर किए गए दावों और संदिग्ध शब्दों के लिए शीर्षक की जाँच करता है।",
+            newsInputLabel: "समाचार शीर्षक दर्ज करें",
+            newsPlaceholder: "समाचार शीर्षक यहाँ पेस्ट करें",
+            newsExample1: "ब्रेकिंग: रातोंरात चमत्कारी इलाज खोजा गया",
+            newsExample2: "सरकार ने नई शिक्षा नीति की पुष्टि की",
+            newsExample3: "चौंकाने वाला सच जो डॉक्टर नहीं चाहते कि आप जानें",
+            newsNote: "PARAKH शीर्षक की भाषा और संकेतों की जाँच करता है। यह अपने आप यह साबित नहीं करता कि खबर सही है या गलत।",
+            urlSubtitle: "संदिग्ध डोमेन, वर्तनी की चाल और जोखिमपूर्ण पैटर्न के लिए वेबसाइट लिंक की जाँच करता है।",
+            urlInputLabel: "वेबसाइट लिंक दर्ज करें",
+            urlPlaceholder: "वेबसाइट लिंक यहाँ पेस्ट करें",
+            urlExample1: "google.com",
+            urlExample2: "sbi-kyc-update.xyz",
+            urlExample3: "amaz0n-security-login.com",
+            urlNote: "PARAKH URL में संदिग्ध पैटर्न की जाँच करता है। सामान्य दिखने वाला लिंक भी असुरक्षित वेबसाइट पर ले जा सकता है।",
+            scamSubtitle: "जल्दबाज़ी, इनाम के दावे, OTP माँगने और अन्य आम धोखाधड़ी संकेतों की जाँच करता है।",
+            scamInputLabel: "संदिग्ध संदेश दर्ज करें",
+            scamPlaceholder: "संदेश यहाँ पेस्ट करें",
+            scamExample1: "आपने ₹50,000 जीते! अभी दावा करें",
+            scamExample2: "आपका खाता आज समाप्त हो रहा है। अभी OTP भेजें",
+            scamExample3: "आपका पार्सल कल पहुँचेगा",
+            scamNote: "PARAKH संदेश में आम धोखाधड़ी पैटर्न की जाँच करता है। चेतावनी संकेत न मिलने का मतलब यह नहीं कि संदेश भरोसेमंद है।",
+            upiSubtitle: "संदिग्ध शब्दों, नकली दिखने वाले हैंडल और मिलते-जुलते पैटर्न के लिए UPI हैंडल की जाँच करता है।",
+            upiInputLabel: "UPI ID दर्ज करें",
+            upiPlaceholder: "name@handle",
+            upiExample1: "rahul@oksbi",
+            upiExample2: "refund.support@oksbl",
+            upiExample3: "rahul@okscambank",
+            upiNote: "PARAKH केवल आपके द्वारा दर्ज UPI ID की जाँच करता है। सामान्य दिखने वाली ID भी किसी धोखेबाज़ की हो सकती है।",
+            emailSubtitle: "संदिग्ध संकेतों के लिए प्रेषक, विषय, संदेश की भाषा और लिंक की जाँच करता है।",
+            emailSenderPlaceholder: "प्रेषक: PayPal Support <fake@gmail.com>",
+            emailSubjectPlaceholder: "ईमेल विषय",
+            emailBodyPlaceholder: "ईमेल का संदेश यहाँ पेस्ट करें",
+            emailNote: "PARAKH प्रेषक और ईमेल सामग्री में आम धोखाधड़ी संकेतों की जाँच करता है। कम जोखिम वाला परिणाम यह साबित नहीं करता कि ईमेल असली है।",
+            apkSubtitle: "Android APK का स्थिर विश्लेषण करता है, जिसमें अनुमतियाँ और VirusTotal हैश जाँच शामिल है।",
+            apkInputLabel: "APK फ़ाइल चुनें",
+            apkNote: "PARAKH केवल स्थिर विश्लेषण करता है। APK को चलाया नहीं जाता।",
+            tryLabel: "उदाहरण:",
+            analyze: "विश्लेषण करें",
+            checking: "जाँच हो रही है...",
+            suspicionScore: "संदेह स्कोर",
+            threshold: "कम जोखिम: 0–19   संदिग्ध: 20–59   खतरनाक: 60+",
+            warningSigns: "चेतावनी संकेत",
+            noWarningSigns: "कोई चेतावनी संकेत नहीं मिला।",
+            checksAndNotes: "जाँच और नोट्स",
+            checkCompleted: "जाँच पूरी हुई",
+            checkCompletedPeriod: "जाँच पूरी हुई।",
+            enterHeadline: "पहले कोई शीर्षक दर्ज करें।",
+            enterUrl: "पहले कोई URL दर्ज करें।",
+            enterMessage: "पहले कोई संदेश दर्ज करें।",
+            enterUpi: "पहले कोई UPI ID दर्ज करें।",
+            enterSender: "पहले प्रेषक का ईमेल दर्ज करें।",
+            enterEmailBody: "पहले ईमेल का संदेश दर्ज करें।",
+            chooseApk: "पहले कोई APK फ़ाइल चुनें।",
+            validApk: "कृपया सही .apk फ़ाइल चुनें।",
+            checkFailed: "जाँच पूरी नहीं हो सकी।",
+            emailCheckFailed: "ईमेल जाँच पूरी नहीं हो सकी।",
+            apkCheckFailed: "APK जाँच पूरी नहीं हो सकी।"
+        }
+    };
+
+    var resultExactTranslations = {
+        "Warning signs": "चेतावनी संकेत",
+        "No warning signs detected.": "कोई चेतावनी संकेत नहीं मिला।",
+        "Checks and notes": "जाँच और नोट्स",
+        "Check completed": "जाँच पूरी हुई",
+        "Check completed.": "जाँच पूरी हुई।",
+        "Enter a headline first.": "पहले कोई शीर्षक दर्ज करें।",
+        "Enter a URL first.": "पहले कोई URL दर्ज करें।",
+        "Enter a message first.": "पहले कोई संदेश दर्ज करें।",
+        "Enter a UPI ID first.": "पहले कोई UPI ID दर्ज करें।",
+        "No data received.": "कोई डेटा प्राप्त नहीं हुआ।",
+        "Please enter a headline.": "कृपया कोई शीर्षक दर्ज करें।",
+        "Please enter a URL.": "कृपया कोई URL दर्ज करें।",
+        "Please enter a message.": "कृपया कोई संदेश दर्ज करें।",
+        "Please enter a UPI ID.": "कृपया कोई UPI ID दर्ज करें।",
+        "Could not analyze the headline.": "शीर्षक का विश्लेषण नहीं हो सका।",
+        "Could not analyze the URL.": "URL का विश्लेषण नहीं हो सका।",
+        "Could not analyze the message.": "संदेश का विश्लेषण नहीं हो सका।",
+        "Could not analyze the UPI ID.": "UPI ID का विश्लेषण नहीं हो सका।",
+        "The check could not be completed.": "जाँच पूरी नहीं हो सकी।",
+        "The email check could not be completed.": "ईमेल जाँच पूरी नहीं हो सकी।",
+        "The APK check could not be completed.": "APK जाँच पूरी नहीं हो सकी।",
+        "Highly suspicious": "अत्यधिक संदिग्ध",
+        "High suspicion": "उच्च संदेह",
+        "Some suspicious signals": "कुछ संदिग्ध संकेत",
+        "Low suspicion": "कम संदेह",
+        "Strong warning signs were detected": "गंभीर चेतावनी संकेत मिले",
+        "Something here deserves a closer look": "यहाँ कुछ ऐसा है जिसकी सावधानी से जाँच ज़रूरी है",
+        "No major warning signs were detected": "कोई बड़ा चेतावनी संकेत नहीं मिला",
+        "This headline may be sensationalized or misleading. Please verify the information before sharing.": "यह शीर्षक सनसनीखेज या भ्रामक हो सकता है। साझा करने से पहले जानकारी की पुष्टि करें।",
+        "No warning signs detected. Still verify the information before sharing.": "कोई चेतावनी संकेत नहीं मिला। फिर भी साझा करने से पहले जानकारी की पुष्टि करें।",
+        "Strong emotional language detected": "तेज़ भावनात्मक भाषा मिली",
+        "Moderate emotional language detected": "मध्यम भावनात्मक भाषा मिली",
+        "Mostly neutral language detected": "भाषा अधिकतर तटस्थ है",
+        "Sensational language detected (+15)": "सनसनीखेज भाषा मिली (+15)",
+        "No sensational language detected": "कोई सनसनीखेज भाषा नहीं मिली",
+        "Conspiracy language detected (+15)": "षड्यंत्र जैसी भाषा मिली (+15)",
+        "No conspiracy language detected": "षड्यंत्र जैसी भाषा नहीं मिली",
+        "Miracle cure language detected (+15)": "चमत्कारी इलाज जैसी भाषा मिली (+15)",
+        "No miracle-cure language detected": "चमत्कारी इलाज जैसी भाषा नहीं मिली",
+        "Urgent action language detected (+15)": "तुरंत कार्रवाई वाली भाषा मिली (+15)",
+        "No urgent-action language detected": "तुरंत कार्रवाई वाली भाषा नहीं मिली",
+        "Extreme certainty detected (+15)": "अत्यधिक निश्चितता वाला दावा मिला (+15)",
+        "No extreme-certainty language detected": "अत्यधिक निश्चितता वाली भाषा नहीं मिली",
+        "Punctuation use looks normal": "विराम-चिह्नों का उपयोग सामान्य है",
+        "Headline is not written entirely in capitals": "शीर्षक पूरी तरह बड़े अक्षरों में नहीं लिखा है",
+        "Excessive use of punctuation marks detected (+2.5)": "विराम-चिह्नों का अत्यधिक उपयोग मिला (+2.5)",
+        "All caps detected (+2.5)": "पूरा पाठ बड़े अक्षरों में मिला (+2.5)",
+        "No fact-check result found for this headline. Please verify from reliable sources.": "इस शीर्षक के लिए कोई फैक्ट-चेक परिणाम नहीं मिला। भरोसेमंद स्रोतों से पुष्टि करें।",
+        "Could not reach the fact-check service. Local checks still apply.": "फैक्ट-चेक सेवा से संपर्क नहीं हो सका। स्थानीय जाँच फिर भी लागू है।",
+        "This claim has been rated as false (+20)": "इस दावे को गलत रेट किया गया है (+20)",
+        "Web search found reliable support for this headline.": "वेब खोज में इस शीर्षक के लिए भरोसेमंद समर्थन मिला।",
+        "The headline appears only partially supported (+10)": "शीर्षक केवल आंशिक रूप से समर्थित लगता है (+10)",
+        "Not enough reliable evidence was found to support this headline (+20)": "इस शीर्षक के समर्थन में पर्याप्त भरोसेमंद प्रमाण नहीं मिला (+20)",
+        "Reliable sources appear to contradict this headline (+35)": "भरोसेमंद स्रोत इस शीर्षक का खंडन करते दिखते हैं (+35)",
+        "Web verification could not be completed.": "वेब सत्यापन पूरा नहीं हो सका।",
+        "No warning signs detected": "कोई चेतावनी संकेत नहीं मिला",
+        "Warning signs were found. Check the site before entering any details.": "चेतावनी संकेत मिले। कोई जानकारी दर्ज करने से पहले साइट की जाँच करें।",
+        "URL explicitly uses HTTP instead of HTTPS (+10)": "URL HTTPS की जगह HTTP का उपयोग करता है (+10)",
+        "URL does not explicitly use HTTP": "URL स्पष्ट रूप से HTTP का उपयोग नहीं करता",
+        "The URL is unusually long (+15)": "URL असामान्य रूप से लंबा है (+15)",
+        "URL length looks normal": "URL की लंबाई सामान्य है",
+        "IP address detected in URL (+15)": "URL में IP पता मिला (+15)",
+        "No IP address detected in URL": "URL में कोई IP पता नहीं मिला",
+        "No suspicious words detected in URL": "URL में कोई संदिग्ध शब्द नहीं मिला",
+        "No suspicious special characters detected": "कोई संदिग्ध विशेष चिन्ह नहीं मिला",
+        "No suspicious TLD detected": "कोई संदिग्ध TLD नहीं मिला",
+        "Multiple subdomains detected (+10)": "कई सबडोमेन मिले (+10)",
+        "Subdomain count looks normal": "सबडोमेन की संख्या सामान्य है",
+        "VirusTotal could not find a report for this URL.": "VirusTotal को इस URL की रिपोर्ट नहीं मिली।",
+        "Could not reach VirusTotal. Local checks still apply.": "VirusTotal से संपर्क नहीं हो सका। स्थानीय जाँच फिर भी लागू है।",
+        "VirusTotal detected no malicious or suspicious engines": "VirusTotal पर किसी इंजन ने इसे दुर्भावनापूर्ण या संदिग्ध नहीं बताया",
+        "One security engine flagged this URL, possibly a false positive": "एक सुरक्षा इंजन ने इस URL को चिन्हित किया; यह गलत चेतावनी भी हो सकती है",
+        "No warning signs detected. Still be careful with unexpected messages.": "कोई चेतावनी संकेत नहीं मिला। फिर भी अनचाहे संदेशों से सावधान रहें।",
+        "Warning signs were found. Do not share OTP, PIN, or money from this message.": "चेतावनी संकेत मिले। इस संदेश के आधार पर OTP, PIN या पैसे साझा न करें।",
+        "Language tone: strong negative / fear-based language detected": "भाषा का स्वर: तेज़ नकारात्मक या डर पैदा करने वाली भाषा मिली",
+        "Language tone: strong emotional / exciting language detected": "भाषा का स्वर: तेज़ भावनात्मक या उत्साहित करने वाली भाषा मिली",
+        "Language tone: moderate emotional language detected": "भाषा का स्वर: मध्यम भावनात्मक भाषा मिली",
+        "Language tone: mostly neutral language detected": "भाषा का स्वर: अधिकतर तटस्थ",
+        "No urgency language detected": "जल्दबाज़ी वाली भाषा नहीं मिली",
+        "No threat or legal-pressure language detected": "धमकी या कानूनी दबाव वाली भाषा नहीं मिली",
+        "No request for sensitive details detected": "संवेदनशील जानकारी माँगने का संकेत नहीं मिला",
+        "No prize or lottery language detected": "इनाम या लॉटरी वाली भाषा नहीं मिली",
+        "No payment or money request detected": "पैसे या भुगतान की माँग नहीं मिली",
+        "No KYC or account-update language detected": "KYC या खाता अपडेट वाली भाषा नहीं मिली",
+        "No government or utility impersonation language detected": "सरकारी या सेवा प्रदाता की नकल वाली भाषा नहीं मिली",
+        "No job or work-from-home scam language detected": "नौकरी या वर्क-फ्रॉम-होम धोखाधड़ी वाली भाषा नहीं मिली",
+        "No courier or parcel scam language detected": "कूरियर या पार्सल धोखाधड़ी वाली भाषा नहीं मिली",
+        "Excessive punctuation detected (+5)": "विराम-चिह्नों का अत्यधिक उपयोग मिला (+5)",
+        "Entire message is in CAPS (+5)": "पूरा संदेश बड़े अक्षरों में है (+5)",
+        "Message is not written entirely in capitals": "संदेश पूरी तरह बड़े अक्षरों में नहीं लिखा है",
+        "Foreign phone number in an India-targeted message (+15)": "भारत-केंद्रित संदेश में विदेशी फ़ोन नंबर मिला (+15)",
+        "No links found in the message.": "संदेश में कोई लिंक नहीं मिला।",
+        "Indian number found. Still do not call unknown numbers from unexpected messages.": "भारतीय नंबर मिला। फिर भी अनचाहे संदेशों में दिए अनजान नंबर पर कॉल न करें।",
+        "No clear phone number found.": "कोई स्पष्ट फ़ोन नंबर नहीं मिला।",
+        "Link uses HTTP instead of HTTPS (+10)": "लिंक HTTPS की जगह HTTP का उपयोग करता है (+10)",
+        "Link does not explicitly use HTTP": "लिंक स्पष्ट रूप से HTTP का उपयोग नहीं करता",
+        "Link does not use an IP address": "लिंक IP पते का उपयोग नहीं करता",
+        "Link is not from a known URL shortener": "लिंक किसी ज्ञात URL शॉर्टनर से नहीं है",
+        "Link does not use a suspicious website ending": "लिंक संदिग्ध वेबसाइट एंडिंग का उपयोग नहीं करता",
+        "VirusTotal has no ready report for this link.": "VirusTotal के पास इस लिंक की तैयार रिपोर्ट नहीं है।",
+        "VirusTotal did not mark this link as malicious": "VirusTotal ने इस लिंक को दुर्भावनापूर्ण नहीं बताया",
+        "This UPI ID may be a scam. Please verify before paying.": "यह UPI ID धोखाधड़ी वाली हो सकती है। भुगतान से पहले पुष्टि करें।",
+        "Some warning signs were found. Please check before paying.": "कुछ चेतावनी संकेत मिले। भुगतान से पहले जाँच करें।",
+        "No warning signs detected. Still check who you are paying.": "कोई चेतावनी संकेत नहीं मिला। फिर भी जाँचें कि आप किसे भुगतान कर रहे हैं।",
+        "Name or handle is empty": "नाम या हैंडल खाली है",
+        "There is more than one @ in the UPI ID": "UPI ID में एक से अधिक @ हैं",
+        "There is a space in the UPI ID": "UPI ID में स्पेस है",
+        "Excessive punctuation in the name": "नाम में बहुत अधिक विराम-चिह्न हैं",
+        "This is not a valid UPI ID. Please enter a valid UPI ID.": "यह सही UPI ID नहीं है। कृपया सही UPI ID दर्ज करें।",
+        "No major warning signs detected. Still be careful with unexpected emails.": "कोई बड़ा चेतावनी संकेत नहीं मिला। फिर भी अनचाहे ईमेल से सावधान रहें।",
+        "Could not find a proper sender email address": "सही प्रेषक ईमेल पता नहीं मिला",
+        "Email has no subject": "ईमेल में विषय नहीं है",
+        "Email subject is present": "ईमेल का विषय मौजूद है",
+        "Email body is empty": "ईमेल का संदेश खाली है",
+        "Email body is present": "ईमेल का संदेश मौजूद है",
+        "This email contains several suspicious signs. Do not click links or share personal information without verifying the sender.": "इस ईमेल में कई संदिग्ध संकेत हैं। प्रेषक की पुष्टि किए बिना लिंक न खोलें और निजी जानकारी साझा न करें।",
+        "Some warning signs were found. Check the sender and content carefully.": "कुछ चेतावनी संकेत मिले। प्रेषक और सामग्री को सावधानी से जाँचें।",
+        "Sender email address does not look valid": "प्रेषक का ईमेल पता सही नहीं लगता",
+        "Sender uses a suspicious-looking domain ending": "प्रेषक संदिग्ध दिखने वाले डोमेन एंडिंग का उपयोग करता है",
+        "Sender domain ending does not match the suspicious list": "प्रेषक का डोमेन एंडिंग संदिग्ध सूची से मेल नहीं खाता",
+        "Sender is using a free email service": "प्रेषक मुफ़्त ईमेल सेवा का उपयोग कर रहा है",
+        "Sender domain contains many hyphens": "प्रेषक के डोमेन में बहुत अधिक हाइफ़न हैं",
+        "Sender domain does not contain excessive hyphens": "प्रेषक के डोमेन में बहुत अधिक हाइफ़न नहीं हैं",
+        "This APK may be risky. Be careful before installing it.": "यह APK जोखिमपूर्ण हो सकता है। इंस्टॉल करने से पहले सावधान रहें।",
+        "Some warning signs were found. Review the permissions and scan results before installing.": "कुछ चेतावनी संकेत मिले। इंस्टॉल करने से पहले अनुमतियाँ और स्कैन परिणाम जाँचें।",
+        "No major warning signs were detected in this static analysis.": "इस स्थिर विश्लेषण में कोई बड़ा चेतावनी संकेत नहीं मिला।",
+        "VirusTotal found several malicious detections": "VirusTotal पर कई दुर्भावनापूर्ण डिटेक्शन मिले",
+        "VirusTotal reported suspicious detections": "VirusTotal ने संदिग्ध डिटेक्शन बताए",
+        "This APK has not been found on VirusTotal before": "यह APK पहले VirusTotal पर नहीं मिला",
+        "VirusTotal found multiple malicious detections": "VirusTotal पर कई दुर्भावनापूर्ण डिटेक्शन मिले",
+        "VirusTotal found one malicious detection": "VirusTotal पर एक दुर्भावनापूर्ण डिटेक्शन मिला"
+    };
+
+    var resultPrefixTranslations = {
+        "Fact-check result found:": "फैक्ट-चेक परिणाम मिला:",
+        "Web analysis:": "वेब विश्लेषण:",
+        "Web verification confidence:": "वेब सत्यापन भरोसा:",
+        "Suspicious word detected (+10):": "संदिग्ध शब्द मिला (+10):",
+        "Suspicious special characters detected (+5):": "संदिग्ध विशेष चिन्ह मिले (+5):",
+        "Suspicious TLD detected (+7.5):": "संदिग्ध TLD मिला (+7.5):",
+        "VirusTotal — malicious:": "VirusTotal — दुर्भावनापूर्ण:",
+        "VirusTotal detected suspicious engines:": "VirusTotal पर संदिग्ध इंजन:",
+        "Urgency language detected (+15):": "जल्दबाज़ी वाली भाषा मिली (+15):",
+        "Threat / legal pressure language detected (+20):": "धमकी / कानूनी दबाव वाली भाषा मिली (+20):",
+        "Request for sensitive details detected (+25):": "संवेदनशील जानकारी माँगने का संकेत मिला (+25):",
+        "Prize / lottery language detected (+15):": "इनाम / लॉटरी वाली भाषा मिली (+15):",
+        "Payment / money request detected (+20):": "पैसे / भुगतान की माँग मिली (+20):",
+        "KYC / account-update language detected (+15):": "KYC / खाता अपडेट वाली भाषा मिली (+15):",
+        "Government / utility impersonation language detected (+15):": "सरकारी / सेवा प्रदाता की नकल वाली भाषा मिली (+15):",
+        "Job / work-from-home scam language detected (+10):": "नौकरी / वर्क-फ्रॉम-होम धोखाधड़ी वाली भाषा मिली (+10):",
+        "Courier / parcel scam language detected (+10):": "कूरियर / पार्सल धोखाधड़ी वाली भाषा मिली (+10):",
+        "Indian number found:": "भारतीय नंबर मिला:",
+        "Non-Indian number found:": "गैर-भारतीय नंबर मिला:",
+        "Links found:": "लिंक मिले:",
+        "Checking:": "जाँच की जा रही है:",
+        "Shortened link detected (+10):": "छोटा किया गया लिंक मिला (+10):",
+        "Suspicious website ending detected (+10):": "संदिग्ध वेबसाइट एंडिंग मिली (+10):",
+        "Malicious engines:": "दुर्भावनापूर्ण इंजन:",
+        "Extra punctuation found in the UPI ID:": "UPI ID में अतिरिक्त विराम-चिह्न मिले:",
+        "Scam words found in name:": "नाम में धोखाधड़ी से जुड़े शब्द मिले:",
+        "This handle looks similar to a real one:": "यह हैंडल किसी असली हैंडल से मिलता-जुलता है:",
+        "Unknown domain:": "अज्ञात डोमेन:",
+        "Known UPI handle:": "ज्ञात UPI हैंडल:",
+        "Sender domain:": "प्रेषक डोमेन:",
+        "Brand name found in sender:": "प्रेषक में ब्रांड नाम मिला:",
+        "Sender claims to be": "प्रेषक खुद को यह बताता है:",
+        "High-risk permission found:": "उच्च-जोखिम अनुमति मिली:",
+        "Sensitive permission found:": "संवेदनशील अनुमति मिली:",
+        "VirusTotal malicious detections:": "VirusTotal दुर्भावनापूर्ण डिटेक्शन:",
+        "VirusTotal suspicious detections:": "VirusTotal संदिग्ध डिटेक्शन:",
+        "VirusTotal harmless detections:": "VirusTotal सुरक्षित डिटेक्शन:",
+        "VirusTotal undetected engines:": "VirusTotal अनिर्धारित इंजन:",
+        "VirusTotal check could not be completed. Status code:": "VirusTotal जाँच पूरी नहीं हो सकी। स्टेटस कोड:"
+    };
+
+    function getUI(key) {
+        return uiTranslations[currentLanguage][key] || uiTranslations.en[key] || key;
+    }
+
+    function translateResultText(value) {
+        if (value === null || value === undefined) {
+            return "";
+        }
+
+        var text = String(value);
+
+        if (currentLanguage !== "hi") {
+            return text;
+        }
+
+        if (resultExactTranslations[text]) {
+            return resultExactTranslations[text];
+        }
+
+        if (/^\d+ warning sign$/.test(text)) {
+            return text.split(" ")[0] + " चेतावनी संकेत";
+        }
+
+        if (/^\d+ warning signs$/.test(text)) {
+            return text.split(" ")[0] + " चेतावनी संकेत";
+        }
+
+        for (var prefix in resultPrefixTranslations) {
+            if (text.indexOf(prefix) === 0) {
+                return resultPrefixTranslations[prefix] + text.slice(prefix.length);
+            }
+        }
+
+        return text;
+    }
+
+    function setText(selector, value) {
+        var element = document.querySelector(selector);
+        if (element) {
+            element.textContent = value;
+        }
+    }
+
+    function setPlaceholder(selector, value) {
+        var element = document.querySelector(selector);
+        if (element) {
+            element.placeholder = value;
+        }
+    }
+
+    function setExampleTexts(prefix, values) {
+        var chips = document.querySelectorAll("#" + prefix + "-analyzer .example-chip");
+        chips.forEach(function(chip, index) {
+            if (values[index] !== undefined) {
+                chip.textContent = values[index];
+            }
+        });
+    }
+
+    function localizeResultElement(element) {
+        if (!element) {
+            return;
+        }
+
+        if (!element.dataset.enText) {
+            element.dataset.enText = element.textContent;
+        }
+
+        if (currentLanguage === "hi") {
+            element.textContent = translateResultText(element.dataset.enText);
+        }
+        else {
+            element.textContent = element.dataset.enText;
+        }
+    }
+
+    function translateRenderedResult(prefix) {
+        localizeResultElement(document.getElementById(prefix + "-verdict"));
+        localizeResultElement(document.getElementById(prefix + "-verdict-reason"));
+        localizeResultElement(document.getElementById(prefix + "-summary"));
+
+        document.querySelectorAll(
+            "#" + prefix + "-warnings h3, " +
+            "#" + prefix + "-warnings p, " +
+            "#" + prefix + "-warnings .result-item span, " +
+            "#" + prefix + "-notes h3, " +
+            "#" + prefix + "-notes p, " +
+            "#" + prefix + "-notes .result-item span"
+        ).forEach(function(element) {
+            localizeResultElement(element);
+        });
+    }
+
+    function translateAllRenderedResults() {
+        ["news", "url", "scam", "upi", "email", "apk"].forEach(function(prefix) {
+            var resultBox = document.getElementById(prefix + "-result");
+            if (resultBox && resultBox.style.display === "block") {
+                translateRenderedResult(prefix);
+            }
+        });
+    }
+
+    function applyLanguage() {
+        document.documentElement.lang = currentLanguage;
+
+        var toggle = document.getElementById("language-toggle");
+        toggle.textContent = currentLanguage === "en" ? "हिंदी" : "English";
+        toggle.setAttribute(
+            "aria-label",
+            currentLanguage === "en" ? "Switch to Hindi" : "Switch to English"
+        );
+
+        var fullForm = document.querySelector(".full-form");
+        if (fullForm) {
+            fullForm.innerHTML = getUI("fullFormHtml");
+        }
+
+        setText(".intro", getUI("intro"));
+
+        setText("#news-card h2", getUI("newsTitle"));
+        setText("#news-card > p:not(.example)", getUI("newsCardDescription"));
+        setText("#news-card .example", getUI("newsCardExample"));
+
+        setText("#url-card h2", getUI("urlTitle"));
+        setText("#url-card > p:not(.example)", getUI("urlCardDescription"));
+        setText("#url-card .example", getUI("urlCardExample"));
+
+        setText("#scam-card h2", getUI("scamTitle"));
+        setText("#scam-card > p:not(.example)", getUI("scamCardDescription"));
+        setText("#scam-card .example", getUI("scamCardExample"));
+
+        setText("#upi-card h2", getUI("upiTitle"));
+        setText("#upi-card > p:not(.example)", getUI("upiCardDescription"));
+        setText("#upi-card .example", getUI("upiCardExample"));
+
+        setText("#email-card h2", getUI("emailTitle"));
+        setText("#email-card > p:not(.example)", getUI("emailCardDescription"));
+        setText("#email-card .example", getUI("emailCardExample"));
+
+        setText("#apk-card h2", getUI("apkTitle"));
+        setText("#apk-card > p:not(.example)", getUI("apkCardDescription"));
+        setText("#apk-card .example", getUI("apkCardExample"));
+
+        document.querySelectorAll(".card .status").forEach(function(status) {
+            status.textContent = getUI("working");
+        });
+
+        var statsLabel = document.querySelector(".stats-label");
+        if (statsLabel) {
+            statsLabel.innerHTML = '<i class="ti ti-history"></i> ' + getUI("checkedToday");
+        }
+
+        var statSpans = document.querySelectorAll(".stats-count > span");
+        if (statSpans.length >= 4) {
+            statSpans[0].innerHTML = '<b id="stat-total">' + totalChecks + '</b> ' + getUI("total");
+            statSpans[1].innerHTML = '<b id="stat-danger">' + dangerousChecks + '</b> ' + getUI("dangerous");
+            statSpans[2].innerHTML = '<b id="stat-suspicious">' + suspiciousChecks + '</b> ' + getUI("suspicious");
+            statSpans[3].innerHTML = '<b id="stat-safe">' + safeChecks + '</b> ' + getUI("safe");
+        }
+
+        setText(".disclaimer", getUI("disclaimer"));
+
+        document.querySelectorAll(".back-button").forEach(function(button) {
+            button.textContent = getUI("allChecks");
+        });
+
+        setText("#news-analyzer .analyzer-title", getUI("newsTitle"));
+        setText("#news-analyzer .analyzer-subtitle", getUI("newsSubtitle"));
+        setText("#news-analyzer .input-label", getUI("newsInputLabel"));
+        setPlaceholder("#news-input", getUI("newsPlaceholder"));
+        setExampleTexts("news", [getUI("newsExample1"), getUI("newsExample2"), getUI("newsExample3")]);
+        setText("#news-analyzer .analyzer-note", getUI("newsNote"));
+
+        setText("#url-analyzer .analyzer-title", getUI("urlTitle"));
+        setText("#url-analyzer .analyzer-subtitle", getUI("urlSubtitle"));
+        setText("#url-analyzer .input-label", getUI("urlInputLabel"));
+        setPlaceholder("#url-input", getUI("urlPlaceholder"));
+        setExampleTexts("url", [getUI("urlExample1"), getUI("urlExample2"), getUI("urlExample3")]);
+        setText("#url-analyzer .analyzer-note", getUI("urlNote"));
+
+        setText("#scam-analyzer .analyzer-title", getUI("scamTitle"));
+        setText("#scam-analyzer .analyzer-subtitle", getUI("scamSubtitle"));
+        setText("#scam-analyzer .input-label", getUI("scamInputLabel"));
+        setPlaceholder("#scam-input", getUI("scamPlaceholder"));
+        setExampleTexts("scam", [getUI("scamExample1"), getUI("scamExample2"), getUI("scamExample3")]);
+        setText("#scam-analyzer .analyzer-note", getUI("scamNote"));
+
+        setText("#upi-analyzer .analyzer-title", getUI("upiTitle"));
+        setText("#upi-analyzer .analyzer-subtitle", getUI("upiSubtitle"));
+        setText("#upi-analyzer .input-label", getUI("upiInputLabel"));
+        setPlaceholder("#upi-input", getUI("upiPlaceholder"));
+        setExampleTexts("upi", [getUI("upiExample1"), getUI("upiExample2"), getUI("upiExample3")]);
+        setText("#upi-analyzer .analyzer-note", getUI("upiNote"));
+
+        setText("#email-analyzer .analyzer-title", getUI("emailTitle"));
+        setText("#email-analyzer .analyzer-subtitle", getUI("emailSubtitle"));
+        setPlaceholder("#email-sender", getUI("emailSenderPlaceholder"));
+        setPlaceholder("#email-subject", getUI("emailSubjectPlaceholder"));
+        setPlaceholder("#email-body", getUI("emailBodyPlaceholder"));
+        setText("#email-analyzer .analyzer-note", getUI("emailNote"));
+
+        setText("#apk-analyzer .analyzer-title", getUI("apkTitle"));
+        setText("#apk-analyzer .analyzer-subtitle", getUI("apkSubtitle"));
+        setText("#apk-analyzer .input-label", getUI("apkInputLabel"));
+        setText("#apk-analyzer .analyzer-note", getUI("apkNote"));
+
+        document.querySelectorAll(".examples > span").forEach(function(element) {
+            element.textContent = getUI("tryLabel");
+        });
+
+        document.querySelectorAll(".score-row > span:first-child").forEach(function(element) {
+            element.textContent = getUI("suspicionScore");
+        });
+
+        document.querySelectorAll(".threshold-text").forEach(function(element) {
+            element.textContent = getUI("threshold");
+        });
+
+        document.querySelectorAll(".analyze-button").forEach(function(button) {
+            button.textContent = button.disabled ? getUI("checking") : getUI("analyze");
+        });
+
+        translateAllRenderedResults();
+    }
+
 
     var totalChecks = 0;
     var dangerousChecks = 0;
@@ -1590,8 +2609,19 @@
     };
 
 
+    document.getElementById("email-card").onclick = function() {
 
-    document.getElementById("news-back").onclick = goHome;
+        openAnalyzer("email");
+
+    };
+
+
+    document.getElementById("apk-card").onclick = function() {
+
+        openAnalyzer("apk");
+
+    };
+document.getElementById("news-back").onclick = goHome;
 
     document.getElementById("url-back").onclick = goHome;
 
@@ -1599,9 +2629,10 @@
 
     document.getElementById("upi-back").onclick = goHome;
 
+    document.getElementById("email-back").onclick = goHome;
 
-
-    document.querySelectorAll(".example-chip").forEach(function(chip) {
+    document.getElementById("apk-back").onclick = goHome;
+document.querySelectorAll(".example-chip").forEach(function(chip) {
 
         chip.onclick = function() {
 
@@ -1930,6 +2961,20 @@
     }
 
 
+    var originalRenderResult = renderResult;
+
+    renderResult = function(prefix, result) {
+        ["verdict", "verdict-reason", "summary"].forEach(function(suffix) {
+            var element = document.getElementById(prefix + "-" + suffix);
+            if (element) {
+                delete element.dataset.enText;
+            }
+        });
+
+        originalRenderResult(prefix, result);
+        translateRenderedResult(prefix);
+    };
+
 
     async function analyzeModule(config) {
 
@@ -1957,7 +3002,7 @@
         if (value === "") {
 
             errorBox.textContent =
-                config.emptyMessage;
+                translateResultText(config.emptyMessage);
 
 
             errorBox.style.display =
@@ -1978,7 +3023,7 @@
 
         button.disabled = true;
 
-        button.textContent = "Checking...";
+        button.textContent = getUI("checking");
 
 
         try {
@@ -2030,7 +3075,7 @@
         catch (error) {
 
             errorBox.textContent =
-                error.message;
+                translateResultText(error.message);
 
 
             errorBox.style.display =
@@ -2043,7 +3088,7 @@
 
             button.disabled = false;
 
-            button.textContent = originalText;
+            button.textContent = getUI("analyze");
 
         }
 
@@ -2051,7 +3096,164 @@
 
 
 
-    var analyzers = [
+    async function analyzeEmail() {
+
+        var sender = document.getElementById("email-sender").value.trim();
+        var subject = document.getElementById("email-subject").value.trim();
+        var body = document.getElementById("email-body").value.trim();
+        var button = document.getElementById("email-analyze");
+        var errorBox = document.getElementById("email-error");
+
+        errorBox.style.display = "none";
+        errorBox.textContent = "";
+
+        if (sender === "") {
+
+            errorBox.textContent = getUI("enterSender");
+            errorBox.style.display = "block";
+            document.getElementById("email-sender").focus();
+            return;
+
+        }
+
+        if (body === "") {
+
+            errorBox.textContent = getUI("enterEmailBody");
+            errorBox.style.display = "block";
+            document.getElementById("email-body").focus();
+            return;
+
+        }
+
+        var originalText = button.textContent;
+        button.disabled = true;
+        button.textContent = getUI("checking");
+
+        try {
+
+            var response = await fetch(
+                "/api/email",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        sender: sender,
+                        subject: subject,
+                        body: body
+                    })
+                }
+            );
+
+            var result = await response.json();
+
+            if (!response.ok) {
+
+                throw new Error(
+                    result.error ||
+                    "The email check could not be completed."
+                );
+
+            }
+
+            renderResult("email", result);
+
+        }
+        catch (error) {
+
+            errorBox.textContent = translateResultText(error.message);
+            errorBox.style.display = "block";
+
+        }
+        finally {
+
+            button.disabled = false;
+            button.textContent = getUI("analyze");
+
+        }
+
+    }
+
+
+    async function analyzeAPK() {
+
+        var input = document.getElementById("apk-input");
+        var button = document.getElementById("apk-analyze");
+        var errorBox = document.getElementById("apk-error");
+
+        errorBox.style.display = "none";
+        errorBox.textContent = "";
+
+        if (input.files.length === 0) {
+
+            errorBox.textContent = getUI("chooseApk");
+            errorBox.style.display = "block";
+            return;
+
+        }
+
+        var file = input.files[0];
+
+        if (!file.name.toLowerCase().endsWith(".apk")) {
+
+            errorBox.textContent = getUI("validApk");
+            errorBox.style.display = "block";
+            return;
+
+        }
+
+        var originalText = button.textContent;
+        button.disabled = true;
+        button.textContent = getUI("checking");
+
+        try {
+
+            var formData = new FormData();
+            formData.append("apk", file);
+
+            var response = await fetch(
+                "/api/apk",
+                {
+                    method: "POST",
+                    body: formData
+                }
+            );
+
+            var result = await response.json();
+
+            if (!response.ok) {
+
+                throw new Error(
+                    result.error ||
+                    "The APK check could not be completed."
+                );
+
+            }
+
+            renderResult("apk", result);
+
+        }
+        catch (error) {
+
+            errorBox.textContent = translateResultText(error.message);
+            errorBox.style.display = "block";
+
+        }
+        finally {
+
+            button.disabled = false;
+            button.textContent = getUI("analyze");
+
+        }
+
+    }
+
+
+    document.getElementById("email-analyze").onclick = analyzeEmail;
+
+    document.getElementById("apk-analyze").onclick = analyzeAPK;
+var analyzers = [
 
 
         {
@@ -2142,6 +3344,15 @@
         );
 
     });
+
+
+    document.getElementById("language-toggle").onclick = function() {
+        currentLanguage = currentLanguage === "en" ? "hi" : "en";
+        localStorage.setItem("parakh-language", currentLanguage);
+        applyLanguage();
+    };
+
+    applyLanguage();
 
 
 </script>

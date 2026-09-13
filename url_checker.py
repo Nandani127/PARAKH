@@ -1,8 +1,9 @@
 import re
 import base64
 import requests
+import os
 
-api_key = "320561f62938f08b527007b07dd9bec58707bc45e3a36c9d63fbeda23734ac55"
+VIRUS_TOTAL_API_KEY = os.getenv("VIRUS_TOTAL_API_KEY")
 
 
 def check_url(url):
@@ -18,28 +19,47 @@ def check_url(url):
     else:
         url_for_check = url
 
-    url_id = base64.urlsafe_b64encode(url_for_check.encode()).decode().strip("=")
+    encoded_url = url_for_check.encode()
+
+    url_id = base64.urlsafe_b64encode(encoded_url).decode()
+
+    url_id = url_id.strip("=")
 
     vt_url = "https://www.virustotal.com/api/v3/urls/" + url_id
 
     headers = {
-        "x-apikey": api_key
+        "x-apikey": VIRUS_TOTAL_API_KEY
     }
 
     try:
-        response = requests.get(vt_url, headers=headers, timeout=15)
 
-        notes.append("VirusTotal status: " + str(response.status_code))
+        response = requests.get(
+            vt_url,
+            headers=headers,
+            timeout=15
+        )
+
+        notes.append(
+            "VirusTotal status: "
+            + str(response.status_code)
+        )
 
         if response.status_code == 200:
 
             data = response.json()
 
-            stats = data["data"]["attributes"]["last_analysis_stats"]
+            data_part = data["data"]
+
+            attributes = data_part["attributes"]
+
+            stats = attributes["last_analysis_stats"]
 
             malicious = stats["malicious"]
+
             suspicious = stats["suspicious"]
+
             harmless = stats["harmless"]
+
             undetected = stats["undetected"]
 
             notes.append(
@@ -58,24 +78,38 @@ def check_url(url):
                 if malicious >= 6:
 
                     suspicion_score += 40
-                    warnings.append("Multiple security engines detected this URL as malicious (+40)")
+
+                    warnings.append(
+                        "Multiple security engines detected this URL as malicious (+40)"
+                    )
+
                     warning_count += 1
 
                 elif malicious >= 3:
 
                     suspicion_score += 30
-                    warnings.append("Several security engines detected this URL as malicious (+30)")
+
+                    warnings.append(
+                        "Several security engines detected this URL as malicious (+30)"
+                    )
+
                     warning_count += 1
 
                 elif malicious >= 2:
 
                     suspicion_score += 10
-                    warnings.append("More than one security engine detected this URL as malicious (+10)")
+
+                    warnings.append(
+                        "More than one security engine detected this URL as malicious (+10)"
+                    )
+
                     warning_count += 1
 
                 elif malicious == 1:
 
-                    notes.append("One security engine flagged this URL, possibly a false positive")
+                    notes.append(
+                        "One security engine flagged this URL, possibly a false positive"
+                    )
 
             elif suspicious > 0:
 
@@ -85,51 +119,87 @@ def check_url(url):
                 )
 
                 if suspicious >= 5:
+
                     suspicion_score += 25
 
                 elif suspicious >= 2:
+
                     suspicion_score += 15
 
                 else:
+
                     suspicion_score += 10
 
                 warning_count += 1
 
             else:
-                notes.append("VirusTotal detected no malicious or suspicious engines")
+
+                notes.append(
+                    "VirusTotal detected no malicious or suspicious engines"
+                )
 
         else:
-            notes.append("VirusTotal could not find a report for this URL.")
+
+            notes.append(
+                "VirusTotal could not find a report for this URL."
+            )
 
     except requests.RequestException:
-        notes.append("Could not reach VirusTotal. Local checks still apply.")
+
+        notes.append(
+            "Could not reach VirusTotal. Local checks still apply."
+        )
 
     if url.startswith("http://"):
 
-        warnings.append("URL explicitly uses HTTP instead of HTTPS (+10)")
+        warnings.append(
+            "URL explicitly uses HTTP instead of HTTPS (+10)"
+        )
+
         suspicion_score += 10
+
         warning_count += 1
 
     else:
-        notes.append("URL does not explicitly use HTTP")
+
+        notes.append(
+            "URL does not explicitly use HTTP"
+        )
 
     if len(url) > 75:
 
-        warnings.append("The URL is unusually long (+15)")
+        warnings.append(
+            "The URL is unusually long (+15)"
+        )
+
         suspicion_score += 15
+
         warning_count += 1
 
     else:
-        notes.append("URL length looks normal")
 
-    if re.search(r"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}", url):
+        notes.append(
+            "URL length looks normal"
+        )
 
-        warnings.append("IP address detected in URL (+15)")
+    if re.search(
+        r"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}",
+        url
+    ):
+
+        warnings.append(
+            "IP address detected in URL (+15)"
+        )
+
         suspicion_score += 15
+
         warning_count += 1
 
     else:
-        notes.append("No IP address detected in URL")
+
+        notes.append(
+            "No IP address detected in URL"
+        )
 
     suspicous_words = [
         "login",
@@ -156,12 +226,21 @@ def check_url(url):
             )
 
             suspicion_score += 10
+
             warning_count += 1
 
     if not suspicious_word_found:
-        notes.append("No suspicious words detected in URL")
 
-    special_chars = ["@", "%", "=", "&"]
+        notes.append(
+            "No suspicious words detected in URL"
+        )
+
+    special_chars = [
+        "@",
+        "%",
+        "=",
+        "&"
+    ]
 
     suspicious_char_found = False
 
@@ -177,10 +256,14 @@ def check_url(url):
             )
 
             suspicion_score += 5
+
             warning_count += 1
 
     if not suspicious_char_found:
-        notes.append("No suspicious special characters detected")
+
+        notes.append(
+            "No suspicious special characters detected"
+        )
 
     suspicious_tlds = [
         ".tk",
@@ -211,10 +294,14 @@ def check_url(url):
             )
 
             suspicion_score += 7.5
+
             warning_count += 1
 
     if not suspicious_tld_found:
-        notes.append("No suspicious TLD detected")
+
+        notes.append(
+            "No suspicious TLD detected"
+        )
 
     parts = url_for_check.split("/")
 
@@ -226,36 +313,54 @@ def check_url(url):
 
         if len(subdomains) > 3:
 
-            warnings.append("Multiple subdomains detected (+10)")
+            warnings.append(
+                "Multiple subdomains detected (+10)"
+            )
+
             suspicion_score += 10
+
             warning_count += 1
 
         else:
-            notes.append("Subdomain count looks normal")
+
+            notes.append(
+                "Subdomain count looks normal"
+            )
 
     if suspicion_score > 100:
+
         suspicion_score = 100
 
     if warning_count == 0:
+
         summary = "No warning signs detected"
 
     else:
+
         summary = "Warning signs were found. Check the site before entering any details."
 
     if suspicion_score >= 75:
+
         label = "Highly suspicious"
+
         label_class = "high"
 
     elif suspicion_score >= 55:
+
         label = "High suspicion"
+
         label_class = "medium"
 
     elif suspicion_score >= 35:
+
         label = "Some suspicious signals"
+
         label_class = "some"
 
     else:
+
         label = "Low suspicion"
+
         label_class = "low"
 
     return {
@@ -285,11 +390,15 @@ if __name__ == "__main__":
 
     print()
 
-    print("URL you entered: ", result["checked"])
+    print(
+        "URL you entered: ",
+        result["checked"]
+    )
 
     print()
 
     for note in result["notes"]:
+
         print(note)
 
     print()
@@ -299,6 +408,7 @@ if __name__ == "__main__":
     print()
 
     for warning in result["warnings"]:
+
         print("⚠️  " + warning)
 
     print()

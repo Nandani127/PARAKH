@@ -2,25 +2,33 @@ import re
 import base64
 import requests
 import phonenumbers
+import os
 
 from urlextract import URLExtract
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
-api_key = "320561f62938f08b527007b07dd9bec58707bc45e3a36c9d63fbeda23734ac55"
+api_key = os.getenv("VIRUS_TOTAL_API_KEY")
 
 
 def check_message(message):
+
     suspicion_score = 0
+
     warning_count = 0
+
     warnings = []
+
     notes = []
 
     message = message.strip()
+
     message_lower = message.lower()
 
     analyzer = SentimentIntensityAnalyzer()
 
-    sentiment = analyzer.polarity_scores(message)
+    sentiment = analyzer.polarity_scores(
+        message
+    )
 
     compound = sentiment["compound"]
 
@@ -77,7 +85,10 @@ def check_message(message):
     for word in urgency_words:
 
         if word in message_lower:
-            found_urgency.append(word)
+
+            found_urgency.append(
+                word
+            )
 
     if found_urgency:
 
@@ -87,6 +98,7 @@ def check_message(message):
         )
 
         suspicion_score += 15
+
         warning_count += 1
 
     else:
@@ -119,7 +131,10 @@ def check_message(message):
     for word in threat_words:
 
         if word in message_lower:
-            found_threats.append(word)
+
+            found_threats.append(
+                word
+            )
 
     if found_threats:
 
@@ -129,6 +144,7 @@ def check_message(message):
         )
 
         suspicion_score += 20
+
         warning_count += 1
 
     else:
@@ -160,7 +176,10 @@ def check_message(message):
     for word in sensitive_words:
 
         if word in message_lower:
-            found_sensitive.append(word)
+
+            found_sensitive.append(
+                word
+            )
 
     if found_sensitive:
 
@@ -170,6 +189,7 @@ def check_message(message):
         )
 
         suspicion_score += 25
+
         warning_count += 1
 
     else:
@@ -200,7 +220,10 @@ def check_message(message):
     for word in prize_words:
 
         if word in message_lower:
-            found_prizes.append(word)
+
+            found_prizes.append(
+                word
+            )
 
     if found_prizes:
 
@@ -210,6 +233,7 @@ def check_message(message):
         )
 
         suspicion_score += 15
+
         warning_count += 1
 
     else:
@@ -244,7 +268,10 @@ def check_message(message):
     for word in payment_words:
 
         if word in message_lower:
-            found_payments.append(word)
+
+            found_payments.append(
+                word
+            )
 
     if found_payments:
 
@@ -254,6 +281,7 @@ def check_message(message):
         )
 
         suspicion_score += 20
+
         warning_count += 1
 
     else:
@@ -280,7 +308,10 @@ def check_message(message):
     for word in kyc_words:
 
         if word in message_lower:
-            found_kyc.append(word)
+
+            found_kyc.append(
+                word
+            )
 
     if found_kyc:
 
@@ -290,6 +321,7 @@ def check_message(message):
         )
 
         suspicion_score += 15
+
         warning_count += 1
 
     else:
@@ -318,7 +350,10 @@ def check_message(message):
     for word in govt_words:
 
         if word in message_lower:
-            found_govt.append(word)
+
+            found_govt.append(
+                word
+            )
 
     if found_govt:
 
@@ -328,6 +363,7 @@ def check_message(message):
         )
 
         suspicion_score += 15
+
         warning_count += 1
 
     else:
@@ -352,7 +388,10 @@ def check_message(message):
     for word in job_words:
 
         if word in message_lower:
-            found_jobs.append(word)
+
+            found_jobs.append(
+                word
+            )
 
     if found_jobs:
 
@@ -362,6 +401,7 @@ def check_message(message):
         )
 
         suspicion_score += 10
+
         warning_count += 1
 
     else:
@@ -385,7 +425,10 @@ def check_message(message):
     for word in delivery_words:
 
         if word in message_lower:
-            found_delivery.append(word)
+
+            found_delivery.append(
+                word
+            )
 
     if found_delivery:
 
@@ -395,6 +438,7 @@ def check_message(message):
         )
 
         suspicion_score += 10
+
         warning_count += 1
 
     else:
@@ -410,6 +454,7 @@ def check_message(message):
         )
 
         suspicion_score += 5
+
         warning_count += 1
 
     else:
@@ -418,9 +463,13 @@ def check_message(message):
             "Punctuation use looks normal"
         )
 
-    letters_only = "".join(
-        ch for ch in message if ch.isalpha()
-    )
+    letters_only = ""
+
+    for ch in message:
+
+        if ch.isalpha():
+
+            letters_only = letters_only + ch
 
     if len(letters_only) >= 8 and message.isupper():
 
@@ -429,6 +478,7 @@ def check_message(message):
         )
 
         suspicion_score += 5
+
         warning_count += 1
 
     else:
@@ -438,6 +488,7 @@ def check_message(message):
         )
 
     indian_numbers = 0
+
     foreign_numbers = 0
 
     for match in phonenumbers.PhoneNumberMatcher(
@@ -484,6 +535,7 @@ def check_message(message):
         )
 
         suspicion_score += 15
+
         warning_count += 1
 
     elif indian_numbers > 0:
@@ -500,7 +552,9 @@ def check_message(message):
 
     extractor = URLExtract()
 
-    urls = extractor.find_urls(message)
+    urls = extractor.find_urls(
+        message
+    )
 
     if not urls:
 
@@ -537,6 +591,7 @@ def check_message(message):
                 )
 
                 suspicion_score += 10
+
                 warning_count += 1
 
             else:
@@ -555,6 +610,7 @@ def check_message(message):
                 )
 
                 suspicion_score += 15
+
                 warning_count += 1
 
             else:
@@ -585,6 +641,7 @@ def check_message(message):
                     )
 
                     suspicion_score += 10
+
                     warning_count += 1
 
             if not short_link_found:
@@ -620,6 +677,7 @@ def check_message(message):
                     )
 
                     suspicion_score += 10
+
                     warning_count += 1
 
             if not suspicious_tld_found:
@@ -628,9 +686,13 @@ def check_message(message):
                     "Link does not use a suspicious website ending"
                 )
 
+            encoded_url = url_for_check.encode()
+
             url_id = base64.urlsafe_b64encode(
-                url_for_check.encode()
-            ).decode().strip("=")
+                encoded_url
+            ).decode()
+
+            url_id = url_id.strip("=")
 
             vt_url = (
                 "https://www.virustotal.com/api/v3/urls/"
@@ -658,13 +720,11 @@ def check_message(message):
 
                     data = response.json()
 
-                    stats = data[
-                        "data"
-                    ][
-                        "attributes"
-                    ][
-                        "last_analysis_stats"
-                    ]
+                    data_part = data["data"]
+
+                    attributes = data_part["attributes"]
+
+                    stats = attributes["last_analysis_stats"]
 
                     malicious = stats["malicious"]
 
@@ -684,6 +744,7 @@ def check_message(message):
                         )
 
                         suspicion_score += 30
+
                         warning_count += 1
 
                     elif malicious >= 1:
@@ -693,6 +754,7 @@ def check_message(message):
                         )
 
                         suspicion_score += 15
+
                         warning_count += 1
 
                     elif suspicious >= 1:
@@ -702,6 +764,7 @@ def check_message(message):
                         )
 
                         suspicion_score += 10
+
                         warning_count += 1
 
                     else:
@@ -723,6 +786,7 @@ def check_message(message):
                 )
 
     if suspicion_score > 100:
+
         suspicion_score = 100
 
     if warning_count == 0:
@@ -736,21 +800,25 @@ def check_message(message):
     if suspicion_score >= 75:
 
         label = "Highly suspicious"
+
         label_class = "high"
 
     elif suspicion_score >= 55:
 
         label = "High suspicion"
+
         label_class = "medium"
 
     elif suspicion_score >= 35:
 
         label = "Some suspicious signals"
+
         label_class = "some"
 
     else:
 
         label = "Low suspicion"
+
         label_class = "low"
 
     return {
@@ -761,7 +829,7 @@ def check_message(message):
         "summary": summary,
         "label": label,
         "label_class": label_class,
-        "checked": message,
+        "checked": message
     }
 
 
@@ -778,36 +846,54 @@ if __name__ == "__main__":
         "Enter the message you want to check:\n"
     )
 
-    result = check_message(message)
+    result = check_message(
+        message
+    )
 
     print()
 
-    print("Message you entered:")
+    print(
+        "Message you entered:"
+    )
 
-    print(result["checked"])
+    print(
+        result["checked"]
+    )
 
     print()
 
     for note in result["notes"]:
+
         print(note)
 
     print()
 
-    print("⚠️  Warning signs detected:")
+    print(
+        "⚠️  Warning signs detected:"
+    )
 
     print()
 
     for warning in result["warnings"]:
-        print("⚠️  " + warning)
+
+        print(
+            "⚠️  " + warning
+        )
 
     print()
 
-    print(result["summary"])
+    print(
+        result["summary"]
+    )
+
+    print()
 
     print(
         "Number of warning signs detected:",
         result["warning_count"]
     )
+
+    print()
 
     print(
         "Suspicion Score:",
@@ -815,4 +901,8 @@ if __name__ == "__main__":
         "/100"
     )
 
-    print(result["label"])
+    print()
+
+    print(
+        result["label"]
+    )

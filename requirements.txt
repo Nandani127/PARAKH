@@ -4,3 +4,6 @@ requests
 vaderSentiment
 phonenumbers
 urlextract
+openai
+androguard
+loguru
