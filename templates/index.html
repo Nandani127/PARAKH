@@ -959,8 +959,56 @@
 
                 </div>
 
+                <div class="card" id="windows-card">
 
-                
+                    <div class="card-title">
+
+                        <i class="ti ti-device-desktop"></i>
+
+                        <h2>Windows Security Scanner</h2>
+
+                    </div>
+
+                    <p>
+                        Check important Windows security settings and exposed services
+                    </p>
+
+                    <p class="example">
+                        Firewall · Defender · ports · startup apps
+                    </p>
+
+                    <span class="status">
+                        working
+                    </span>
+
+                </div>
+
+
+                <div class="card" id="android-card">
+
+                    <div class="card-title">
+
+                        <i class="ti ti-device-mobile"></i>
+
+                        <h2>Android Security Scanner</h2>
+
+                    </div>
+
+                    <p>
+                        Inspect a connected Android phone for important security indicators
+                    </p>
+
+                    <p class="example">
+                        security patch · apps · permissions · boot state
+                    </p>
+
+                    <span class="status">
+                        working
+                    </span>
+
+                </div>
+
+
             </div>
 
 
@@ -1939,8 +1987,238 @@
 
     </div>
 
+    <div class="analyzer-page" id="windows-analyzer">
 
-    
+        <button class="back-button" id="windows-back">
+            ← All checks
+        </button>
+
+        <div class="analyzer-header">
+
+            <div class="blue-line"></div>
+
+            <h2 class="analyzer-title">
+                Windows Security Scanner
+            </h2>
+
+            <p class="analyzer-subtitle">
+                Checks important Windows security settings, protection features, listening ports and startup programs.
+            </p>
+
+        </div>
+
+        <p class="input-label" id="windows-input-label">
+            Scan the Windows computer running PARAKH
+        </p>
+
+        <div class="input-row">
+
+            <button
+                class="analyze-button"
+                id="windows-analyze"
+                type="button"
+            >
+                Scan this PC
+            </button>
+
+        </div>
+
+        <p class="api-error" id="windows-error"></p>
+
+        <div class="result-box" id="windows-result">
+
+            <div class="verdict-band" id="windows-verdict-band">
+
+                <i
+                    class="ti ti-alert-circle"
+                    id="windows-verdict-icon"
+                ></i>
+
+                <div>
+
+                    <p
+                        class="verdict-title"
+                        id="windows-verdict"
+                    ></p>
+
+                    <p
+                        class="verdict-reason"
+                        id="windows-verdict-reason"
+                    ></p>
+
+                </div>
+
+            </div>
+
+            <div class="score-area">
+
+                <div class="score-row">
+
+                    <span>Suspicion score</span>
+
+                    <span
+                        class="score-number"
+                        id="windows-score"
+                    ></span>
+
+                </div>
+
+                <div class="score-track">
+
+                    <div
+                        class="score-fill"
+                        id="windows-score-fill"
+                    ></div>
+
+                </div>
+
+                <p class="threshold-text">
+                    Low risk: 0–19 &nbsp; Suspicious: 20–59 &nbsp; Dangerous: 60+
+                </p>
+
+            </div>
+
+            <div class="result-details">
+
+                <div id="windows-warnings"></div>
+
+                <div id="windows-notes"></div>
+
+            </div>
+
+            <div class="summary">
+
+                <i class="ti ti-info-circle"></i>
+
+                <span id="windows-summary"></span>
+
+            </div>
+
+        </div>
+
+        <p class="analyzer-note" id="windows-note">
+            PARAKH only reads security indicators. A warning does not prove that the computer is infected or vulnerable.
+        </p>
+
+    </div>
+
+
+    <div class="analyzer-page" id="android-analyzer">
+
+        <button class="back-button" id="android-back">
+            ← All checks
+        </button>
+
+        <div class="analyzer-header">
+
+            <div class="blue-line"></div>
+
+            <h2 class="analyzer-title">
+                Android Security Scanner
+            </h2>
+
+            <p class="analyzer-subtitle">
+                Checks a connected Android phone for security patches, boot protection, sensitive app permissions and other security indicators.
+            </p>
+
+        </div>
+
+        <p class="input-label" id="android-input-label">
+            Connect your Android phone by USB and approve USB debugging
+        </p>
+
+        <div class="input-row">
+
+            <button
+                class="analyze-button"
+                id="android-analyze"
+                type="button"
+            >
+                Scan connected phone
+            </button>
+
+        </div>
+
+        <p class="api-error" id="android-error"></p>
+
+        <div class="result-box" id="android-result">
+
+            <div class="verdict-band" id="android-verdict-band">
+
+                <i
+                    class="ti ti-alert-circle"
+                    id="android-verdict-icon"
+                ></i>
+
+                <div>
+
+                    <p
+                        class="verdict-title"
+                        id="android-verdict"
+                    ></p>
+
+                    <p
+                        class="verdict-reason"
+                        id="android-verdict-reason"
+                    ></p>
+
+                </div>
+
+            </div>
+
+            <div class="score-area">
+
+                <div class="score-row">
+
+                    <span>Suspicion score</span>
+
+                    <span
+                        class="score-number"
+                        id="android-score"
+                    ></span>
+
+                </div>
+
+                <div class="score-track">
+
+                    <div
+                        class="score-fill"
+                        id="android-score-fill"
+                    ></div>
+
+                </div>
+
+                <p class="threshold-text">
+                    Low risk: 0–19 &nbsp; Suspicious: 20–59 &nbsp; Dangerous: 60+
+                </p>
+
+            </div>
+
+            <div class="result-details">
+
+                <div id="android-warnings"></div>
+
+                <div id="android-notes"></div>
+
+            </div>
+
+            <div class="summary">
+
+                <i class="ti ti-info-circle"></i>
+
+                <span id="android-summary"></span>
+
+            </div>
+
+        </div>
+
+        <p class="analyzer-note" id="android-note">
+            PARAKH uses ADB in read-only mode. It does not install, remove or change anything on the phone.
+        </p>
+
+    </div>
+
+
 </div>
 
 
@@ -1953,7 +2231,7 @@
     var uiTranslations = {
         en: {
             fullFormHtml: "<b>P</b>ublic <b>A</b>nalysis and <b>R</b>eliability <b>A</b>ssessment for <b>K</b>nowledge and <b>H</b>onesty",
-            intro: "Six checks for the things that arrive uninvited - a headline, a link, a message, a payment request and more.",
+            intro: "Eight checks for the things that arrive uninvited - from suspicious content to the security of your own devices.",
             newsTitle: "News Analyzer",
             newsCardDescription: "Check a news headline for suspicious signals",
             newsCardExample: "SHOCKING truth doctors don't want you to know",
@@ -1972,6 +2250,23 @@
             apkTitle: "APK Analyzer",
             apkCardDescription: "Scan an Android APK for risky permissions and known threats",
             apkCardExample: "upload an .apk file",
+            windowsTitle: "Windows Security Scanner",
+            windowsCardDescription: "Check important Windows security settings and exposed services",
+            windowsCardExample: "Firewall · Defender · ports · startup apps",
+            androidTitle: "Android Security Scanner",
+            androidCardDescription: "Inspect a connected Android phone for important security indicators",
+            androidCardExample: "security patch · apps · permissions · boot state",
+            windowsSubtitle: "Checks important Windows security settings, protection features, listening ports and startup programs.",
+            windowsInputLabel: "Scan the Windows computer running PARAKH",
+            windowsNote: "PARAKH only reads security indicators. A warning does not prove that the computer is infected or vulnerable.",
+            windowsScan: "Scan this PC",
+            androidSubtitle: "Checks a connected Android phone for security patches, boot protection, sensitive app permissions and other security indicators.",
+            androidInputLabel: "Connect your Android phone by USB and approve USB debugging",
+            androidNote: "PARAKH uses ADB in read-only mode. It does not install, remove or change anything on the phone.",
+            androidScan: "Scan connected phone",
+            scanning: "Scanning...",
+            windowsCheckFailed: "The Windows scan could not be completed.",
+            androidCheckFailed: "The Android scan could not be completed.",
             working: "working",
             checkedToday: "Checked today",
             total: "total",
@@ -2040,7 +2335,7 @@
         },
         hi: {
             fullFormHtml: "जन-सूचना के विश्लेषण, विश्वसनीयता, ज्ञान और सत्यता का आकलन",
-            intro: "अनचाही चीज़ों की जाँच के लिए छह मॉड्यूल — खबर, लिंक, संदेश, भुगतान अनुरोध और बहुत कुछ।",
+            intro: "आठ जाँच मॉड्यूल — संदिग्ध सामग्री से लेकर आपके अपने उपकरणों की सुरक्षा तक।",
             newsTitle: "समाचार विश्लेषक",
             newsCardDescription: "समाचार शीर्षक में संदिग्ध संकेतों की जाँच करें",
             newsCardExample: "चौंकाने वाला सच जो डॉक्टर नहीं चाहते कि आप जानें",
@@ -2059,6 +2354,23 @@
             apkTitle: "APK विश्लेषक",
             apkCardDescription: "जोखिमपूर्ण अनुमतियों और ज्ञात खतरों के लिए Android APK स्कैन करें",
             apkCardExample: ".apk फ़ाइल अपलोड करें",
+            windowsTitle: "Windows सुरक्षा स्कैनर",
+            windowsCardDescription: "महत्वपूर्ण Windows सुरक्षा सेटिंग्स और खुले नेटवर्क सेवाओं की जाँच करें",
+            windowsCardExample: "फ़ायरवॉल · Defender · पोर्ट्स · स्टार्टअप ऐप्स",
+            androidTitle: "Android सुरक्षा स्कैनर",
+            androidCardDescription: "कनेक्ट किए गए Android फ़ोन के महत्वपूर्ण सुरक्षा संकेतों की जाँच करें",
+            androidCardExample: "सुरक्षा पैच · ऐप्स · अनुमतियाँ · बूट स्थिति",
+            windowsSubtitle: "Windows की महत्वपूर्ण सुरक्षा सेटिंग्स, सुरक्षा सुविधाओं, सुन रहे पोर्ट्स और स्टार्टअप प्रोग्राम की जाँच करता है।",
+            windowsInputLabel: "उस Windows कंप्यूटर को स्कैन करें जिस पर PARAKH चल रहा है",
+            windowsNote: "PARAKH केवल सुरक्षा संकेत पढ़ता है। चेतावनी का मतलब यह साबित होना नहीं है कि कंप्यूटर संक्रमित या असुरक्षित है।",
+            windowsScan: "इस PC को स्कैन करें",
+            androidSubtitle: "कनेक्ट किए गए Android फ़ोन के सुरक्षा पैच, बूट सुरक्षा, संवेदनशील ऐप अनुमतियों और अन्य सुरक्षा संकेतों की जाँच करता है।",
+            androidInputLabel: "Android फ़ोन को USB से जोड़ें और USB debugging की अनुमति दें",
+            androidNote: "PARAKH ADB का उपयोग केवल पढ़ने के लिए करता है। यह फ़ोन में कुछ इंस्टॉल, हटाता या बदलता नहीं है।",
+            androidScan: "कनेक्टेड फ़ोन स्कैन करें",
+            scanning: "स्कैन हो रहा है...",
+            windowsCheckFailed: "Windows स्कैन पूरा नहीं हो सका।",
+            androidCheckFailed: "Android स्कैन पूरा नहीं हो सका।",
             working: "कार्यरत",
             checkedToday: "आज की जाँचें",
             total: "कुल",
@@ -2258,7 +2570,102 @@
         "VirusTotal reported suspicious detections": "VirusTotal ने संदिग्ध डिटेक्शन बताए",
         "This APK has not been found on VirusTotal before": "यह APK पहले VirusTotal पर नहीं मिला",
         "VirusTotal found multiple malicious detections": "VirusTotal पर कई दुर्भावनापूर्ण डिटेक्शन मिले",
-        "VirusTotal found one malicious detection": "VirusTotal पर एक दुर्भावनापूर्ण डिटेक्शन मिला"
+        "VirusTotal found one malicious detection": "VirusTotal पर एक दुर्भावनापूर्ण डिटेक्शन मिला",
+        "The Windows scan could not be completed.": "Windows स्कैन पूरा नहीं हो सका।",
+        "The Android scan could not be completed.": "Android स्कैन पूरा नहीं हो सका।",
+        "Could not scan this Windows computer.": "इस Windows कंप्यूटर को स्कैन नहीं किया जा सका।",
+        "Could not scan the Android device.": "Android डिवाइस को स्कैन नहीं किया जा सका।",
+        "Unsupported system": "असमर्थित सिस्टम",
+        "High security risk": "उच्च सुरक्षा जोखिम",
+        "Moderate security risk": "मध्यम सुरक्षा जोखिम",
+        "Some security concerns": "कुछ सुरक्षा चिंताएँ",
+        "Low security risk": "कम सुरक्षा जोखिम",
+        "This scanner can only run on Windows.": "यह स्कैनर केवल Windows पर चल सकता है।",
+        "Windows could not be detected.": "Windows का पता नहीं लगाया जा सका।",
+        "Windows Firewall status could not be checked": "Windows Firewall की स्थिति जाँची नहीं जा सकी",
+        "Windows Firewall is disabled for one or more network profiles": "एक या अधिक नेटवर्क प्रोफ़ाइल के लिए Windows Firewall बंद है",
+        "Windows Firewall is enabled": "Windows Firewall चालू है",
+        "Microsoft Defender real-time protection is enabled": "Microsoft Defender की रियल-टाइम सुरक्षा चालू है",
+        "Microsoft Defender real-time protection is disabled": "Microsoft Defender की रियल-टाइम सुरक्षा बंद है",
+        "Microsoft Defender status could not be checked": "Microsoft Defender की स्थिति जाँची नहीं जा सकी",
+        "Installed antivirus software could not be identified": "इंस्टॉल किए गए एंटीवायरस की पहचान नहीं हो सकी",
+        "Remote Desktop is enabled": "Remote Desktop चालू है",
+        "Remote Desktop is disabled": "Remote Desktop बंद है",
+        "Remote Desktop status could not be checked": "Remote Desktop की स्थिति जाँची नहीं जा सकी",
+        "SMBv1 is enabled. This is an old Windows file-sharing protocol": "SMBv1 चालू है। यह पुराना Windows फ़ाइल-शेयरिंग प्रोटोकॉल है",
+        "SMBv1 is disabled": "SMBv1 बंद है",
+        "SMBv1 status could not be checked": "SMBv1 की स्थिति जाँची नहीं जा सकी",
+        "User Account Control is enabled": "User Account Control चालू है",
+        "User Account Control is disabled": "User Account Control बंद है",
+        "User Account Control status could not be checked": "User Account Control की स्थिति जाँची नहीं जा सकी",
+        "Secure Boot is enabled": "Secure Boot चालू है",
+        "Secure Boot appears to be disabled": "Secure Boot बंद दिखाई देता है",
+        "Secure Boot status could not be checked": "Secure Boot की स्थिति जाँची नहीं जा सकी",
+        "The latest detected Windows update is more than 90 days old": "अंतिम मिला Windows अपडेट 90 दिन से अधिक पुराना है",
+        "The latest detected Windows update is more than 45 days old": "अंतिम मिला Windows अपडेट 45 दिन से अधिक पुराना है",
+        "Windows appears to have been updated recently": "Windows हाल ही में अपडेट हुआ दिखाई देता है",
+        "The Windows update date could not be interpreted": "Windows अपडेट की तारीख समझी नहीं जा सकी",
+        "Latest Windows update date could not be checked": "नवीनतम Windows अपडेट की तारीख जाँची नहीं जा सकी",
+        "No commonly sensitive listening ports were detected": "कोई सामान्य संवेदनशील listening port नहीं मिला",
+        "A listening port does not automatically mean the computer is vulnerable": "किसी port का listening होना अपने आप यह साबित नहीं करता कि कंप्यूटर असुरक्षित है",
+        "No listening network ports were detected": "कोई listening network port नहीं मिला",
+        "Several Windows security settings deserve attention. Review the warnings before ignoring them.": "Windows की कई सुरक्षा सेटिंग्स पर ध्यान देने की ज़रूरत है। चेतावनियों को नज़रअंदाज़ करने से पहले उनकी जाँच करें।",
+        "Some Windows security settings may need attention.": "Windows की कुछ सुरक्षा सेटिंग्स पर ध्यान देने की ज़रूरत हो सकती है।",
+        "A few security-related items were found that may be worth reviewing.": "कुछ सुरक्षा-संबंधी चीज़ें मिली हैं जिनकी समीक्षा करना उचित हो सकता है।",
+        "No major warning signs were detected by these Windows security checks.": "इन Windows सुरक्षा जाँचों में कोई बड़ा चेतावनी संकेत नहीं मिला।",
+        "ADB unavailable": "ADB उपलब्ध नहीं है",
+        "No device detected": "कोई डिवाइस नहीं मिला",
+        "Authorization required": "अनुमति आवश्यक है",
+        "Device unavailable": "डिवाइस उपलब्ध नहीं है",
+        "ADB is not installed or could not be found.": "ADB इंस्टॉल नहीं है या नहीं मिला।",
+        "Install Android Platform Tools before scanning an Android device.": "Android डिवाइस स्कैन करने से पहले Android Platform Tools इंस्टॉल करें।",
+        "No Android device was detected.": "कोई Android डिवाइस नहीं मिला।",
+        "Connect the phone using USB and enable USB debugging.": "फ़ोन को USB से जोड़ें और USB debugging चालू करें।",
+        "No Android phone is currently available for scanning.": "स्कैन के लिए अभी कोई Android फ़ोन उपलब्ध नहीं है।",
+        "The Android phone has not authorized this computer.": "Android फ़ोन ने इस कंप्यूटर को अनुमति नहीं दी है।",
+        "Unlock the phone and approve the USB debugging request.": "फ़ोन अनलॉक करें और USB debugging अनुरोध को अनुमति दें।",
+        "PARAKH cannot scan the device until USB debugging access is approved.": "USB debugging की अनुमति मिलने तक PARAKH डिवाइस को स्कैन नहीं कर सकता।",
+        "The connected Android device is not ready.": "कनेक्ट किया गया Android डिवाइस तैयार नहीं है।",
+        "Reconnect the phone and check the USB debugging connection.": "फ़ोन को दोबारा जोड़ें और USB debugging कनेक्शन जाँचें।",
+        "SELinux security enforcement is enabled": "SELinux सुरक्षा enforcement चालू है",
+        "SELinux is running in permissive mode": "SELinux permissive mode में चल रहा है",
+        "SELinux appears to be disabled": "SELinux बंद दिखाई देता है",
+        "SELinux status could not be checked": "SELinux की स्थिति जाँची नहीं जा सकी",
+        "Android Verified Boot reports a normal verified state": "Android Verified Boot सामान्य verified स्थिति दिखाता है",
+        "Verified Boot status could not be checked": "Verified Boot की स्थिति जाँची नहीं जा सकी",
+        "Bootloader appears to be locked": "Bootloader लॉक दिखाई देता है",
+        "Bootloader appears to be unlocked": "Bootloader अनलॉक दिखाई देता है",
+        "Bootloader lock status could not be checked": "Bootloader लॉक की स्थिति जाँची नहीं जा सकी",
+        "Device storage encryption is enabled": "डिवाइस स्टोरेज encryption चालू है",
+        "Device storage does not appear to be encrypted": "डिवाइस स्टोरेज encrypted नहीं दिखाई देता",
+        "Device encryption status could not be checked": "डिवाइस encryption की स्थिति जाँची नहीं जा सकी",
+        "The Android build uses test-keys and may be a custom or development build": "Android build test-keys का उपयोग करता है और custom या development build हो सकता है",
+        "Android build does not report test-keys": "Android build test-keys रिपोर्ट नहीं करता",
+        "The device is using a userdebug Android build": "डिवाइस userdebug Android build का उपयोग कर रहा है",
+        "The device is using an engineering Android build": "डिवाइस engineering Android build का उपयोग कर रहा है",
+        "The device is using a normal production Android build": "डिवाइस सामान्य production Android build का उपयोग कर रहा है",
+        "The Android system build is marked as debuggable": "Android system build को debuggable के रूप में चिह्नित किया गया है",
+        "The Android system build is not marked as debuggable": "Android system build को debuggable के रूप में चिह्नित नहीं किया गया है",
+        "A possible root access binary was detected on the device": "डिवाइस पर संभावित root access binary मिली",
+        "No common root binary was detected": "कोई सामान्य root binary नहीं मिली",
+        "Developer Options are currently enabled": "Developer Options अभी चालू हैं",
+        "Developer Options appear to be disabled": "Developer Options बंद दिखाई देते हैं",
+        "USB debugging is enabled. Disable it after the scan if you do not normally use it.": "USB debugging चालू है। यदि आप इसे सामान्यतः उपयोग नहीं करते, तो स्कैन के बाद बंद कर दें।",
+        "No obvious ADB or package-installer sideloaded apps were identified": "कोई स्पष्ट ADB या package-installer से sideload किया गया ऐप नहीं मिला",
+        "Accessibility access can be legitimate, but it gives applications powerful control over device interaction": "Accessibility access वैध हो सकता है, लेकिन यह ऐप्स को डिवाइस के उपयोग पर शक्तिशाली नियंत्रण देता है",
+        "No user-installed application with enabled Accessibility access was detected": "Accessibility access वाला कोई user-installed ऐप नहीं मिला",
+        "Display-over-other-apps permission can be useful but may also be abused for deceptive overlays": "अन्य ऐप्स के ऊपर दिखने की अनुमति उपयोगी हो सकती है, लेकिन इसका गलत उपयोग भ्रामक overlay के लिए भी हो सकता है",
+        "No user-installed overlay applications were detected by this check": "इस जाँच में कोई user-installed overlay ऐप नहीं मिला",
+        "The Android security patch is more than 6 months old": "Android सुरक्षा पैच 6 महीने से अधिक पुराना है",
+        "The Android security patch is more than 3 months old": "Android सुरक्षा पैच 3 महीने से अधिक पुराना है",
+        "The Android security patch is more than 2 months old": "Android सुरक्षा पैच 2 महीने से अधिक पुराना है",
+        "The Android security patch is relatively recent": "Android सुरक्षा पैच अपेक्षाकृत नया है",
+        "The security patch date could not be interpreted": "सुरक्षा पैच की तारीख समझी नहीं जा सकी",
+        "Android security patch date could not be checked": "Android सुरक्षा पैच की तारीख जाँची नहीं जा सकी",
+        "PARAKH found several Android security indicators that deserve careful review.": "PARAKH को कई Android सुरक्षा संकेत मिले जिनकी सावधानी से समीक्षा करनी चाहिए।",
+        "Some Android security settings or applications may need attention.": "Android की कुछ सुरक्षा सेटिंग्स या ऐप्स पर ध्यान देने की ज़रूरत हो सकती है।",
+        "No major warning signs were detected by the available Android security checks.": "उपलब्ध Android सुरक्षा जाँचों में कोई बड़ा चेतावनी संकेत नहीं मिला।"
+
     };
 
     var resultPrefixTranslations = {
@@ -2300,7 +2707,20 @@
         "VirusTotal suspicious detections:": "VirusTotal संदिग्ध डिटेक्शन:",
         "VirusTotal harmless detections:": "VirusTotal सुरक्षित डिटेक्शन:",
         "VirusTotal undetected engines:": "VirusTotal अनिर्धारित इंजन:",
-        "VirusTotal check could not be completed. Status code:": "VirusTotal जाँच पूरी नहीं हो सकी। स्टेटस कोड:"
+        "VirusTotal check could not be completed. Status code:": "VirusTotal जाँच पूरी नहीं हो सकी। स्टेटस कोड:",
+        "Detected antivirus:": "पता चला एंटीवायरस:",
+        "Latest detected Windows update:": "नवीनतम मिला Windows अपडेट:",
+        "Startup item deserves review:": "इस स्टार्टअप आइटम की समीक्षा करें:",
+        "Device detected:": "डिवाइस मिला:",
+        "Android version:": "Android संस्करण:",
+        "Android security patch:": "Android सुरक्षा पैच:",
+        "Android Verified Boot state deserves review:": "Android Verified Boot स्थिति की समीक्षा करें:",
+        "Device storage encryption is enabled:": "डिवाइस स्टोरेज encryption चालू है:",
+        "Root-related file detected:": "Root से जुड़ी फ़ाइल मिली:",
+        "Application deserves review:": "इस ऐप की समीक्षा करें:",
+        "User-installed app has Accessibility access:": "User-installed ऐप के पास Accessibility access है:",
+        "User-installed app can display over other apps:": "User-installed ऐप अन्य ऐप्स के ऊपर दिख सकता है:"
+
     };
 
     function getUI(key) {
@@ -2328,6 +2748,31 @@
 
         if (/^\d+ warning signs$/.test(text)) {
             return text.split(" ")[0] + " चेतावनी संकेत";
+        }
+
+        var windowsEndpoints = text.match(/^(\d+) listening network endpoints were detected$/);
+        if (windowsEndpoints) {
+            return windowsEndpoints[1] + " listening network endpoints मिले";
+        }
+
+        var startupPrograms = text.match(/^(\d+) startup programs were found$/);
+        if (startupPrograms) {
+            return startupPrograms[1] + " स्टार्टअप प्रोग्राम मिले";
+        }
+
+        var userApps = text.match(/^(\d+) user-installed applications were found$/);
+        if (userApps) {
+            return userApps[1] + " user-installed ऐप मिले";
+        }
+
+        var sideloadedApps = text.match(/^(\d+) application\(s\) appear to have been installed outside a recognized app store$/);
+        if (sideloadedApps) {
+            return sideloadedApps[1] + " ऐप मान्यता प्राप्त app store के बाहर से इंस्टॉल किए गए दिखाई देते हैं";
+        }
+
+        var listeningPort = text.match(/^(.+) is listening on port (\d+) at (.+)$/);
+        if (listeningPort) {
+            return listeningPort[1] + " port " + listeningPort[2] + " पर " + listeningPort[3] + " पते पर listening है";
         }
 
         for (var prefix in resultPrefixTranslations) {
@@ -2397,7 +2842,7 @@
     }
 
     function translateAllRenderedResults() {
-        ["news", "url", "scam", "upi", "email", "apk"].forEach(function(prefix) {
+        ["news", "url", "scam", "upi", "email", "apk", "windows", "android"].forEach(function(prefix) {
             var resultBox = document.getElementById(prefix + "-result");
             if (resultBox && resultBox.style.display === "block") {
                 translateRenderedResult(prefix);
@@ -2445,6 +2890,14 @@
         setText("#apk-card h2", getUI("apkTitle"));
         setText("#apk-card > p:not(.example)", getUI("apkCardDescription"));
         setText("#apk-card .example", getUI("apkCardExample"));
+
+        setText("#windows-card h2", getUI("windowsTitle"));
+        setText("#windows-card > p:not(.example)", getUI("windowsCardDescription"));
+        setText("#windows-card .example", getUI("windowsCardExample"));
+
+        setText("#android-card h2", getUI("androidTitle"));
+        setText("#android-card > p:not(.example)", getUI("androidCardDescription"));
+        setText("#android-card .example", getUI("androidCardExample"));
 
         document.querySelectorAll(".card .status").forEach(function(status) {
             status.textContent = getUI("working");
@@ -2509,6 +2962,16 @@
         setText("#apk-analyzer .input-label", getUI("apkInputLabel"));
         setText("#apk-analyzer .analyzer-note", getUI("apkNote"));
 
+        setText("#windows-analyzer .analyzer-title", getUI("windowsTitle"));
+        setText("#windows-analyzer .analyzer-subtitle", getUI("windowsSubtitle"));
+        setText("#windows-input-label", getUI("windowsInputLabel"));
+        setText("#windows-note", getUI("windowsNote"));
+
+        setText("#android-analyzer .analyzer-title", getUI("androidTitle"));
+        setText("#android-analyzer .analyzer-subtitle", getUI("androidSubtitle"));
+        setText("#android-input-label", getUI("androidInputLabel"));
+        setText("#android-note", getUI("androidNote"));
+
         document.querySelectorAll(".examples > span").forEach(function(element) {
             element.textContent = getUI("tryLabel");
         });
@@ -2524,6 +2987,16 @@
         document.querySelectorAll(".analyze-button").forEach(function(button) {
             button.textContent = button.disabled ? getUI("checking") : getUI("analyze");
         });
+
+        var windowsScanButton = document.getElementById("windows-analyze");
+        if (windowsScanButton) {
+            windowsScanButton.textContent = windowsScanButton.disabled ? getUI("scanning") : getUI("windowsScan");
+        }
+
+        var androidScanButton = document.getElementById("android-analyze");
+        if (androidScanButton) {
+            androidScanButton.textContent = androidScanButton.disabled ? getUI("scanning") : getUI("androidScan");
+        }
 
         translateAllRenderedResults();
     }
@@ -2621,6 +3094,22 @@
         openAnalyzer("apk");
 
     };
+
+
+    document.getElementById("windows-card").onclick = function() {
+
+        openAnalyzer("windows");
+
+    };
+
+
+    document.getElementById("android-card").onclick = function() {
+
+        openAnalyzer("android");
+
+    };
+
+
 document.getElementById("news-back").onclick = goHome;
 
     document.getElementById("url-back").onclick = goHome;
@@ -2632,6 +3121,11 @@ document.getElementById("news-back").onclick = goHome;
     document.getElementById("email-back").onclick = goHome;
 
     document.getElementById("apk-back").onclick = goHome;
+
+    document.getElementById("windows-back").onclick = goHome;
+
+    document.getElementById("android-back").onclick = goHome;
+
 document.querySelectorAll(".example-chip").forEach(function(chip) {
 
         chip.onclick = function() {
@@ -3250,9 +3744,89 @@ document.querySelectorAll(".example-chip").forEach(function(chip) {
     }
 
 
+
+
+    async function analyzeSystem(prefix, endpoint, buttonId, failedMessageKey) {
+
+        var button = document.getElementById(buttonId);
+        var errorBox = document.getElementById(prefix + "-error");
+
+        errorBox.style.display = "none";
+        errorBox.textContent = "";
+
+        button.disabled = true;
+        button.textContent = getUI("scanning");
+
+        try {
+
+            var response = await fetch(
+                endpoint,
+                {
+                    method: "POST"
+                }
+            );
+
+            var result = await response.json();
+
+            if (!response.ok) {
+                throw new Error(
+                    result.error || getUI(failedMessageKey)
+                );
+            }
+
+            renderResult(prefix, result);
+
+        }
+        catch (error) {
+
+            errorBox.textContent = translateResultText(error.message);
+            errorBox.style.display = "block";
+
+        }
+        finally {
+
+            button.disabled = false;
+
+            if (prefix === "windows") {
+                button.textContent = getUI("windowsScan");
+            }
+            else {
+                button.textContent = getUI("androidScan");
+            }
+
+        }
+
+    }
+
+
+    async function analyzeWindows() {
+        await analyzeSystem(
+            "windows",
+            "/api/windows",
+            "windows-analyze",
+            "windowsCheckFailed"
+        );
+    }
+
+
+    async function analyzeAndroid() {
+        await analyzeSystem(
+            "android",
+            "/api/android",
+            "android-analyze",
+            "androidCheckFailed"
+        );
+    }
+
+
     document.getElementById("email-analyze").onclick = analyzeEmail;
 
     document.getElementById("apk-analyze").onclick = analyzeAPK;
+
+    document.getElementById("windows-analyze").onclick = analyzeWindows;
+
+    document.getElementById("android-analyze").onclick = analyzeAndroid;
+
 var analyzers = [
 
 
