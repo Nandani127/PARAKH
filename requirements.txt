@@ -1,5 +1,4 @@
 Flask
-gunicorn
 requests
 vaderSentiment
 phonenumbers
@@ -7,6 +6,8 @@ urlextract
 openai
 androguard
 loguru
+psutil
+gunicorn
 Flask-SocketIO
-python-socketio
+python-socketio[client]
 simple-websocket

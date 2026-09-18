@@ -737,6 +737,68 @@
 
         }
 
+
+
+        .agent-install-box {
+            display: none;
+            margin-top: 18px;
+            padding: 18px;
+            border: 1px solid var(--ink-line);
+            border-radius: 10px;
+            background-color: var(--ink-raised);
+        }
+
+        .agent-install-box.show {
+            display: block;
+        }
+
+        .agent-install-title {
+            margin: 0 0 8px 0;
+            color: var(--paper);
+            font-family: var(--mono);
+            font-size: 17px;
+            font-weight: 500;
+        }
+
+        .agent-install-text {
+            margin: 0 0 12px 0;
+            color: var(--paper-dim);
+        }
+
+        .agent-install-steps {
+            margin: 0 0 16px 22px;
+            padding: 0;
+            color: var(--paper-dim);
+        }
+
+        .agent-install-steps li {
+            margin: 5px 0;
+        }
+
+        .agent-download-button {
+            display: inline-block;
+            text-decoration: none;
+            background-color: var(--beam);
+            color: var(--ink);
+            border: 0;
+            border-radius: 6px;
+            padding: 10px 16px;
+            font-family: var(--sans);
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .agent-download-button:hover {
+            filter: brightness(1.06);
+        }
+
+        .agent-install-small {
+            margin: 12px 0 0 0;
+            color: var(--paper-dim);
+            font-size: 14px;
+        }
+
     </style>
 
 </head>
@@ -2008,19 +2070,10 @@
         </div>
 
         <p class="input-label" id="windows-input-label">
-            Run PARAKH Agent on this PC, then enter its pairing code
+            Scan the Windows computer running PARAKH
         </p>
 
         <div class="input-row">
-
-            <input
-                id="windows-pair-code"
-                type="text"
-                maxlength="10"
-                autocomplete="off"
-                spellcheck="false"
-                placeholder="PARAKH Agent pairing code"
-            >
 
             <button
                 class="analyze-button"
@@ -2030,6 +2083,22 @@
                 Scan this PC
             </button>
 
+        </div>
+
+        <div class="agent-install-box" id="windows-agent-install">
+            <p class="agent-install-title" id="windows-agent-title">PARAKH Agent required</p>
+            <p class="agent-install-text" id="windows-agent-text">The Windows scanner runs on your computer through the PARAKH Agent.</p>
+            <ol class="agent-install-steps">
+                <li id="windows-agent-step-1">Download and extract PARAKH-Agent.zip.</li>
+                <li id="windows-agent-step-2">Open PARAKH-Agent.exe and keep its window open.</li>
+                <li id="windows-agent-step-3">Return here and press Scan this PC again.</li>
+            </ol>
+            <a
+                class="agent-download-button"
+                id="windows-agent-download"
+                href="https://github.com/Nandani127/PARAKH/releases/latest/download/PARAKH-Agent.zip"
+            >Download PARAKH Agent</a>
+            <p class="agent-install-small" id="windows-agent-small">A quick manual is included inside the ZIP.</p>
         </div>
 
         <p class="api-error" id="windows-error"></p>
@@ -2133,19 +2202,10 @@
         </div>
 
         <p class="input-label" id="android-input-label">
-            Run PARAKH Agent on the PC connected to your phone, then enter its pairing code
+            Connect your Android phone by USB and approve USB debugging
         </p>
 
         <div class="input-row">
-
-            <input
-                id="android-pair-code"
-                type="text"
-                maxlength="10"
-                autocomplete="off"
-                spellcheck="false"
-                placeholder="PARAKH Agent pairing code"
-            >
 
             <button
                 class="analyze-button"
@@ -2155,6 +2215,22 @@
                 Scan connected phone
             </button>
 
+        </div>
+
+        <div class="agent-install-box" id="android-agent-install">
+            <p class="agent-install-title" id="android-agent-title">PARAKH Agent required</p>
+            <p class="agent-install-text" id="android-agent-text">The Android scanner uses the PARAKH Agent and ADB on your computer.</p>
+            <ol class="agent-install-steps">
+                <li id="android-agent-step-1">Download and extract PARAKH-Agent.zip.</li>
+                <li id="android-agent-step-2">Open PARAKH-Agent.exe and keep its window open.</li>
+                <li id="android-agent-step-3">Connect the phone, approve USB debugging, then scan again.</li>
+            </ol>
+            <a
+                class="agent-download-button"
+                id="android-agent-download"
+                href="https://github.com/Nandani127/PARAKH/releases/latest/download/PARAKH-Agent.zip"
+            >Download PARAKH Agent</a>
+            <p class="agent-install-small" id="android-agent-small">A quick manual is included inside the ZIP. Android scans also require ADB.</p>
         </div>
 
         <p class="api-error" id="android-error"></p>
@@ -2275,19 +2351,27 @@
             androidCardDescription: "Inspect a connected Android phone for important security indicators",
             androidCardExample: "security patch · apps · permissions · boot state",
             windowsSubtitle: "Checks important Windows security settings, protection features, listening ports and startup programs.",
-            windowsInputLabel: "Run PARAKH Agent on this PC, then enter its pairing code",
+            windowsInputLabel: "Scan the Windows computer running PARAKH",
             windowsNote: "PARAKH only reads security indicators. A warning does not prove that the computer is infected or vulnerable.",
             windowsScan: "Scan this PC",
             androidSubtitle: "Checks a connected Android phone for security patches, boot protection, sensitive app permissions and other security indicators.",
-            androidInputLabel: "Run PARAKH Agent on the PC connected to your phone, then enter its pairing code",
+            androidInputLabel: "Connect your Android phone by USB and approve USB debugging",
             androidNote: "PARAKH uses ADB in read-only mode. It does not install, remove or change anything on the phone.",
             androidScan: "Scan connected phone",
             scanning: "Scanning...",
+            agentRequired: "PARAKH Agent required",
+            windowsAgentText: "The Windows scanner runs on your computer through the PARAKH Agent.",
+            androidAgentText: "The Android scanner uses the PARAKH Agent and ADB on your computer.",
+            agentStep1: "Download and extract PARAKH-Agent.zip.",
+            agentStep2: "Open PARAKH-Agent.exe and keep its window open.",
+            windowsAgentStep3: "Return here and press Scan this PC again.",
+            androidAgentStep3: "Connect the phone, approve USB debugging, then scan again.",
+            agentDownload: "Download PARAKH Agent",
+            windowsAgentSmall: "A quick manual is included inside the ZIP.",
+            androidAgentSmall: "A quick manual is included inside the ZIP. Android scans also require ADB.",
+            agentConnectingFailed: "PARAKH Agent is running but could not connect to this website. Keep the agent open and try again.",
             windowsCheckFailed: "The Windows scan could not be completed.",
             androidCheckFailed: "The Android scan could not be completed.",
-            pairCodePlaceholder: "PARAKH Agent pairing code",
-            enterPairCode: "Enter the pairing code shown by PARAKH Agent.",
-            invalidServerResponse: "The server returned an unexpected response.",
             working: "working",
             checkedToday: "Checked today",
             total: "total",
@@ -2382,19 +2466,27 @@
             androidCardDescription: "कनेक्ट किए गए Android फ़ोन के महत्वपूर्ण सुरक्षा संकेतों की जाँच करें",
             androidCardExample: "सुरक्षा पैच · ऐप्स · अनुमतियाँ · बूट स्थिति",
             windowsSubtitle: "Windows की महत्वपूर्ण सुरक्षा सेटिंग्स, सुरक्षा सुविधाओं, सुन रहे पोर्ट्स और स्टार्टअप प्रोग्राम की जाँच करता है।",
-            windowsInputLabel: "इस PC पर PARAKH Agent चलाएँ, फिर उसका pairing code दर्ज करें",
+            windowsInputLabel: "उस Windows कंप्यूटर को स्कैन करें जिस पर PARAKH चल रहा है",
             windowsNote: "PARAKH केवल सुरक्षा संकेत पढ़ता है। चेतावनी का मतलब यह साबित होना नहीं है कि कंप्यूटर संक्रमित या असुरक्षित है।",
             windowsScan: "इस PC को स्कैन करें",
             androidSubtitle: "कनेक्ट किए गए Android फ़ोन के सुरक्षा पैच, बूट सुरक्षा, संवेदनशील ऐप अनुमतियों और अन्य सुरक्षा संकेतों की जाँच करता है।",
-            androidInputLabel: "फ़ोन से जुड़े PC पर PARAKH Agent चलाएँ, फिर उसका pairing code दर्ज करें",
+            androidInputLabel: "Android फ़ोन को USB से जोड़ें और USB debugging की अनुमति दें",
             androidNote: "PARAKH ADB का उपयोग केवल पढ़ने के लिए करता है। यह फ़ोन में कुछ इंस्टॉल, हटाता या बदलता नहीं है।",
             androidScan: "कनेक्टेड फ़ोन स्कैन करें",
             scanning: "स्कैन हो रहा है...",
+            agentRequired: "PARAKH Agent आवश्यक है",
+            windowsAgentText: "Windows स्कैनर आपके कंप्यूटर पर PARAKH Agent के माध्यम से चलता है।",
+            androidAgentText: "Android स्कैनर आपके कंप्यूटर पर PARAKH Agent और ADB का उपयोग करता है।",
+            agentStep1: "PARAKH-Agent.zip डाउनलोड करें और उसे extract करें।",
+            agentStep2: "PARAKH-Agent.exe खोलें और उसकी window खुली रखें।",
+            windowsAgentStep3: "यहाँ वापस आकर फिर से इस PC को स्कैन करें दबाएँ।",
+            androidAgentStep3: "फ़ोन कनेक्ट करें, USB debugging की अनुमति दें और फिर से स्कैन करें।",
+            agentDownload: "PARAKH Agent डाउनलोड करें",
+            windowsAgentSmall: "ZIP के अंदर एक छोटा manual शामिल है।",
+            androidAgentSmall: "ZIP के अंदर manual शामिल है। Android स्कैन के लिए ADB भी आवश्यक है।",
+            agentConnectingFailed: "PARAKH Agent चल रहा है, लेकिन वेबसाइट से कनेक्ट नहीं हो सका। Agent खुला रखें और फिर कोशिश करें।",
             windowsCheckFailed: "Windows स्कैन पूरा नहीं हो सका।",
             androidCheckFailed: "Android स्कैन पूरा नहीं हो सका।",
-            pairCodePlaceholder: "PARAKH Agent pairing code",
-            enterPairCode: "PARAKH Agent पर दिखाया गया pairing code दर्ज करें।",
-            invalidServerResponse: "सर्वर से अपेक्षित उत्तर नहीं मिला।",
             working: "कार्यरत",
             checkedToday: "आज की जाँचें",
             total: "कुल",
@@ -2599,15 +2691,6 @@
         "The Android scan could not be completed.": "Android स्कैन पूरा नहीं हो सका।",
         "Could not scan this Windows computer.": "इस Windows कंप्यूटर को स्कैन नहीं किया जा सका।",
         "Could not scan the Android device.": "Android डिवाइस को स्कैन नहीं किया जा सका।",
-        "Enter your PARAKH Agent pairing code.": "अपना PARAKH Agent pairing code दर्ज करें।",
-        "PARAKH Agent is not connected. Run the agent on your PC and check the pairing code.": "PARAKH Agent कनेक्ट नहीं है। अपने PC पर agent चलाएँ और pairing code जाँचें।",
-        "The device scan timed out. Make sure PARAKH Agent is still running.": "डिवाइस स्कैन का समय समाप्त हो गया। सुनिश्चित करें कि PARAKH Agent अभी भी चल रहा है।",
-        "PARAKH Agent disconnected during the scan.": "स्कैन के दौरान PARAKH Agent डिस्कनेक्ट हो गया।",
-        "Another device scan is already running.": "एक अन्य डिवाइस स्कैन पहले से चल रहा है।",
-        "The PARAKH Agent returned an invalid result.": "PARAKH Agent ने अमान्य परिणाम लौटाया।",
-        "The device scan did not return a result.": "डिवाइस स्कैन से कोई परिणाम नहीं मिला।",
-        "Unknown scan type.": "अज्ञात स्कैन प्रकार।",
-        "Invalid pairing code.": "Pairing code मान्य नहीं है।",
         "Unsupported system": "असमर्थित सिस्टम",
         "High security risk": "उच्च सुरक्षा जोखिम",
         "Moderate security risk": "मध्यम सुरक्षा जोखिम",
@@ -2998,14 +3081,26 @@
         setText("#windows-analyzer .analyzer-title", getUI("windowsTitle"));
         setText("#windows-analyzer .analyzer-subtitle", getUI("windowsSubtitle"));
         setText("#windows-input-label", getUI("windowsInputLabel"));
-        setPlaceholder("#windows-pair-code", getUI("pairCodePlaceholder"));
         setText("#windows-note", getUI("windowsNote"));
+        setText("#windows-agent-title", getUI("agentRequired"));
+        setText("#windows-agent-text", getUI("windowsAgentText"));
+        setText("#windows-agent-step-1", getUI("agentStep1"));
+        setText("#windows-agent-step-2", getUI("agentStep2"));
+        setText("#windows-agent-step-3", getUI("windowsAgentStep3"));
+        setText("#windows-agent-download", getUI("agentDownload"));
+        setText("#windows-agent-small", getUI("windowsAgentSmall"));
 
         setText("#android-analyzer .analyzer-title", getUI("androidTitle"));
         setText("#android-analyzer .analyzer-subtitle", getUI("androidSubtitle"));
         setText("#android-input-label", getUI("androidInputLabel"));
-        setPlaceholder("#android-pair-code", getUI("pairCodePlaceholder"));
         setText("#android-note", getUI("androidNote"));
+        setText("#android-agent-title", getUI("agentRequired"));
+        setText("#android-agent-text", getUI("androidAgentText"));
+        setText("#android-agent-step-1", getUI("agentStep1"));
+        setText("#android-agent-step-2", getUI("agentStep2"));
+        setText("#android-agent-step-3", getUI("androidAgentStep3"));
+        setText("#android-agent-download", getUI("agentDownload"));
+        setText("#android-agent-small", getUI("androidAgentSmall"));
 
         document.querySelectorAll(".examples > span").forEach(function(element) {
             element.textContent = getUI("tryLabel");
@@ -3781,38 +3876,117 @@ document.querySelectorAll(".example-chip").forEach(function(chip) {
 
 
 
-    async function analyzeSystem(prefix, endpoint, buttonId, failedMessageKey) {
+    var agentDownloadUrl = "https://github.com/Nandani127/PARAKH/releases/latest/download/PARAKH-Agent.zip";
 
-        var button = document.getElementById(buttonId);
-        var errorBox = document.getElementById(prefix + "-error");
-        var pairCodeInput = document.getElementById(prefix + "-pair-code");
 
-        errorBox.style.display = "none";
-        errorBox.textContent = "";
+    function showAgentInstallBox(prefix) {
+        var box = document.getElementById(prefix + "-agent-install");
 
-        var pairCode = pairCodeInput.value.trim().toUpperCase();
+        if (box) {
+            box.classList.add("show");
+        }
+    }
 
-        if (pairCode === "") {
-            errorBox.textContent = getUI("enterPairCode");
-            errorBox.style.display = "block";
-            pairCodeInput.focus();
+
+    function hideAgentInstallBox(prefix) {
+        var box = document.getElementById(prefix + "-agent-install");
+
+        if (box) {
+            box.classList.remove("show");
+        }
+    }
+
+
+    function startAgentDownload() {
+        if (sessionStorage.getItem("parakh-agent-download-started") === "yes") {
             return;
         }
 
-        pairCodeInput.value = pairCode;
-        localStorage.setItem("parakh-agent-code", pairCode);
+        sessionStorage.setItem("parakh-agent-download-started", "yes");
 
-        var otherPrefix = prefix === "windows" ? "android" : "windows";
-        var otherInput = document.getElementById(otherPrefix + "-pair-code");
+        var link = document.createElement("a");
+        link.href = agentDownloadUrl;
+        link.style.display = "none";
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+    }
 
-        if (otherInput) {
-            otherInput.value = pairCode;
+
+    async function getLocalAgent() {
+        var controller = new AbortController();
+
+        var timeout = setTimeout(
+            function() {
+                controller.abort();
+            },
+            16000
+        );
+
+        try {
+            var statusUrl =
+                "http://127.0.0.1:8765/status?server=" +
+                encodeURIComponent(window.location.origin);
+
+            var response = await fetch(
+                statusUrl,
+                {
+                    method: "GET",
+                    cache: "no-store",
+                    mode: "cors",
+                    signal: controller.signal
+                }
+            );
+
+            clearTimeout(timeout);
+
+            var result = await response.json();
+
+            if (!response.ok) {
+                return {
+                    running: true,
+                    connected: false,
+                    pair_code: "",
+                    error: result.error || getUI("agentConnectingFailed")
+                };
+            }
+
+            return result;
         }
+        catch (error) {
+            clearTimeout(timeout);
+            return null;
+        }
+    }
+
+
+    async function analyzeSystem(prefix, endpoint, buttonId, failedMessageKey) {
+        var button = document.getElementById(buttonId);
+        var errorBox = document.getElementById(prefix + "-error");
+
+        errorBox.style.display = "none";
+        errorBox.textContent = "";
 
         button.disabled = true;
         button.textContent = getUI("scanning");
 
         try {
+            var agent = await getLocalAgent();
+
+            if (!agent || agent.running !== true) {
+                showAgentInstallBox(prefix);
+                startAgentDownload();
+                return;
+            }
+
+            if (agent.connected !== true || !agent.pair_code) {
+                hideAgentInstallBox(prefix);
+                throw new Error(
+                    agent.error || getUI("agentConnectingFailed")
+                );
+            }
+
+            hideAgentInstallBox(prefix);
 
             var response = await fetch(
                 endpoint,
@@ -3822,22 +3996,12 @@ document.querySelectorAll(".example-chip").forEach(function(chip) {
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
-                        pair_code: pairCode
+                        pair_code: agent.pair_code
                     })
                 }
             );
 
-            var responseText = await response.text();
-            var result;
-
-            try {
-                result = JSON.parse(responseText);
-            }
-            catch (parseError) {
-                throw new Error(
-                    getUI("invalidServerResponse")
-                );
-            }
+            var result = await response.json();
 
             if (!response.ok) {
                 throw new Error(
@@ -3846,16 +4010,12 @@ document.querySelectorAll(".example-chip").forEach(function(chip) {
             }
 
             renderResult(prefix, result);
-
         }
         catch (error) {
-
             errorBox.textContent = translateResultText(error.message);
             errorBox.style.display = "block";
-
         }
         finally {
-
             button.disabled = false;
 
             if (prefix === "windows") {
@@ -3864,9 +4024,7 @@ document.querySelectorAll(".example-chip").forEach(function(chip) {
             else {
                 button.textContent = getUI("androidScan");
             }
-
         }
-
     }
 
 
@@ -3897,40 +4055,6 @@ document.querySelectorAll(".example-chip").forEach(function(chip) {
     document.getElementById("windows-analyze").onclick = analyzeWindows;
 
     document.getElementById("android-analyze").onclick = analyzeAndroid;
-
-    var savedAgentCode = localStorage.getItem("parakh-agent-code") || "";
-
-    document.getElementById("windows-pair-code").value = savedAgentCode;
-    document.getElementById("android-pair-code").value = savedAgentCode;
-
-    ["windows-pair-code", "android-pair-code"].forEach(function(inputId) {
-
-        document.getElementById(inputId).addEventListener(
-            "input",
-            function(event) {
-
-                var value = event.target.value.toUpperCase();
-
-                event.target.value = value;
-
-                var otherId =
-                    inputId === "windows-pair-code"
-                    ? "android-pair-code"
-                    : "windows-pair-code";
-
-                document.getElementById(otherId).value = value;
-
-                if (value === "") {
-                    localStorage.removeItem("parakh-agent-code");
-                }
-                else {
-                    localStorage.setItem("parakh-agent-code", value);
-                }
-
-            }
-        );
-
-    });
 
 var analyzers = [
 

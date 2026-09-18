@@ -1,219 +1,251 @@
-import os
+import json
 import platform
 import secrets
 import socketio
 import threading
+import time
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from urllib.parse import parse_qs, urlparse
 
 from windows_scanner import check_windows
 from android_scanner import check_android
 
-
-alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"
-
-pair_code = ""
-
-for number in range(10):
-    pair_code += secrets.choice(alphabet)
-
-
-server_url = os.getenv(
-    "PARAKH_SERVER_URL",
-    ""
-).strip()
+pair_code = secrets.token_hex(6).upper()
+sio = socketio.Client(reconnection=True)
+registered_event = threading.Event()
+connection_lock = threading.Lock()
+current_server_url = ""
+last_connection_error = ""
 
 
-if server_url == "":
-    print()
-    server_url = input(
-        "Paste your PARAKH Render URL: "
-    ).strip()
+def normalize_server_url(value):
+    value = str(value or "").strip().rstrip("/")
 
+    if value == "":
+        return ""
 
-server_url = server_url.rstrip("/")
+    parsed = urlparse(value)
+    hostname = (parsed.hostname or "").lower()
 
+    if parsed.scheme == "https" and hostname:
+        return value
 
-sio = socketio.Client(
-    reconnection=True,
-    reconnection_attempts=0,
-    reconnection_delay=2
-)
+    if parsed.scheme == "http" and hostname in ["localhost", "127.0.0.1"]:
+        return value
 
-scan_lock = threading.Lock()
+    return ""
 
 
 @sio.event
 def connect():
-    print()
-    print("================================")
-    print("PARAKH DEVICE AGENT")
-    print("================================")
-    print()
-    print("Connected to:")
-    print(server_url)
-    print()
-    print("This PC:")
-    print(platform.node())
-    print()
-    print("Pairing code:")
-    print()
-    print("        " + pair_code)
-    print()
-    print("Enter this code in PARAKH.")
-    print("Keep this window open while scanning.")
-    print()
+    registered_event.clear()
 
     sio.emit(
         "register_agent",
         {
-            "pair_code": pair_code
+            "pair_code": pair_code,
+            "computer_name": platform.node(),
+            "platform": platform.platform()
         }
     )
 
 
 @sio.on("agent_registered")
 def agent_registered(data):
-    print("Agent ready.")
-    print()
-
-
-@sio.on("agent_registration_error")
-def agent_registration_error(data):
-    print(
-        "Agent registration failed:",
-        data.get("error", "Unknown error")
-    )
+    if isinstance(data, dict) and data.get("ok") is True:
+        registered_event.set()
 
 
 @sio.event
 def disconnect():
-    print()
-    print("Connection to PARAKH was lost.")
-    print("The agent will try to reconnect.")
-    print()
+    registered_event.clear()
 
 
 @sio.on("scan_request")
 def scan_request(data):
-    scan_type = str(
-        data.get(
-            "scan_type",
-            ""
-        )
-    ).strip()
+    worker = threading.Thread(
+        target=perform_scan,
+        args=(data,),
+        daemon=True
+    )
+    worker.start()
 
-    request_id = str(
-        data.get(
-            "request_id",
-            ""
-        )
-    ).strip()
+
+def perform_scan(data):
+    request_id = ""
+    scan_type = ""
+
+    if isinstance(data, dict):
+        request_id = str(data.get("request_id", "")).strip()
+        scan_type = str(data.get("scan_type", "")).strip()
 
     if request_id == "":
         return
 
-    if scan_type not in [
-        "windows",
-        "android"
-    ]:
-        return
+    try:
+        if scan_type == "windows":
+            result = check_windows()
+        elif scan_type == "android":
+            result = check_android()
+        else:
+            result = {"error": "Unknown scan type."}
+    except Exception as error:
+        result = {"error": str(error)}
 
-    thread = threading.Thread(
-        target=perform_scan,
-        args=(
-            request_id,
-            scan_type
-        ),
-        daemon=True
-    )
-
-    thread.start()
-
-
-def perform_scan(
-    request_id,
-    scan_type
-):
-    got_lock = scan_lock.acquire(
-        blocking=False
-    )
-
-    if not got_lock:
+    if sio.connected:
         sio.emit(
             "scan_result",
             {
                 "request_id": request_id,
-                "result": {
-                    "error": "Another device scan is already running."
-                }
+                "result": result
             }
         )
 
+
+def connect_to_parakh(server_url):
+    global current_server_url
+    global last_connection_error
+
+    server_url = normalize_server_url(server_url)
+
+    if server_url == "":
+        last_connection_error = "The PARAKH website address is not valid."
+        return False
+
+    with connection_lock:
+        if sio.connected and current_server_url == server_url and registered_event.is_set():
+            return True
+
+        if sio.connected:
+            try:
+                sio.disconnect()
+            except Exception:
+                pass
+
+        current_server_url = server_url
+        registered_event.clear()
+        last_connection_error = ""
+
+        try:
+            sio.connect(server_url, wait_timeout=10)
+        except Exception as error:
+            last_connection_error = str(error)
+            return False
+
+        if not registered_event.wait(timeout=5):
+            last_connection_error = "Connected to the website, but agent registration did not finish."
+            return False
+
+        return True
+
+
+class AgentStatusHandler(BaseHTTPRequestHandler):
+
+    def add_cors_headers(self):
+        origin = self.headers.get("Origin", "")
+
+        if origin:
+            self.send_header("Access-Control-Allow-Origin", origin)
+            self.send_header("Vary", "Origin")
+
+        self.send_header("Access-Control-Allow-Methods", "GET, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type")
+        self.send_header("Access-Control-Allow-Private-Network", "true")
+
+    def do_OPTIONS(self):
+        self.send_response(204)
+        self.add_cors_headers()
+        self.end_headers()
+
+    def do_GET(self):
+        parsed = urlparse(self.path)
+
+        if parsed.path != "/status":
+            self.send_response(404)
+            self.add_cors_headers()
+            self.end_headers()
+            return
+
+        query = parse_qs(parsed.query)
+        server_url = ""
+
+        if "server" in query and len(query["server"]) > 0:
+            server_url = normalize_server_url(query["server"][0])
+
+        origin = normalize_server_url(self.headers.get("Origin", ""))
+
+        if server_url == "" or origin == "" or server_url != origin:
+            self.send_json(
+                403,
+                {
+                    "running": True,
+                    "connected": False,
+                    "pair_code": "",
+                    "error": "PARAKH Agent only connects to the website that requested the scan."
+                }
+            )
+            return
+
+        connected = connect_to_parakh(server_url)
+
+        self.send_json(
+            200,
+            {
+                "running": True,
+                "connected": connected,
+                "pair_code": pair_code if connected else "",
+                "error": last_connection_error
+            }
+        )
+
+    def send_json(self, status_code, data):
+        body = json.dumps(data).encode("utf-8")
+        self.send_response(status_code)
+        self.send_header("Content-Type", "application/json; charset=utf-8")
+        self.send_header("Content-Length", str(len(body)))
+        self.add_cors_headers()
+        self.end_headers()
+        self.wfile.write(body)
+
+    def log_message(self, format, *args):
         return
 
+
+def run_local_status_server():
+    server = ThreadingHTTPServer(("127.0.0.1", 8765), AgentStatusHandler)
+    server.serve_forever()
+
+
+def main():
+    print("====================================")
+    print("PARAKH DEVICE AGENT")
+    print("====================================")
+    print()
+    print("Agent is running.")
+    print("Keep this window open while scanning.")
+    print("Open the PARAKH website and press Scan this PC or Scan connected phone.")
+    print()
+    print("For Android scans, connect the phone by USB and approve USB debugging.")
+    print()
+
+    status_thread = threading.Thread(
+        target=run_local_status_server,
+        daemon=True
+    )
+    status_thread.start()
+
     try:
-        print()
-        print(
-            "Starting",
-            scan_type,
-            "scan..."
-        )
-
-        if scan_type == "windows":
-            result = check_windows()
-
-        elif scan_type == "android":
-            result = check_android()
-
-        else:
-            result = {
-                "error": "Unknown scan type."
-            }
-
-        if not isinstance(
-            result,
-            dict
-        ):
-            result = {
-                "error": "The scanner returned an invalid result."
-            }
-
-    except Exception as error:
-        result = {
-            "error": str(error)
-        }
-
+        while True:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        pass
     finally:
-        scan_lock.release()
-
-    sio.emit(
-        "scan_result",
-        {
-            "request_id": request_id,
-            "result": result
-        }
-    )
-
-    print(
-        scan_type.capitalize(),
-        "scan completed."
-    )
+        if sio.connected:
+            try:
+                sio.disconnect()
+            except Exception:
+                pass
 
 
-print()
-print("Connecting to PARAKH...")
-
-try:
-    sio.connect(
-        server_url
-    )
-
-    sio.wait()
-
-except KeyboardInterrupt:
-    print()
-    print("PARAKH Agent stopped.")
-
-except Exception as error:
-    print()
-    print("Could not connect to PARAKH:")
-    print(error)
+if __name__ == "__main__":
+    main()

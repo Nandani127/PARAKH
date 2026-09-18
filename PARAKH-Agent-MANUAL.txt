@@ -1,0 +1,26 @@
+PARAKH AGENT - QUICK MANUAL
+
+What it does
+PARAKH Agent lets the PARAKH website request the Windows and Android security scans from your own computer. The device checks run locally on your PC.
+
+How to use it
+1. Extract PARAKH-Agent.zip.
+2. Double-click PARAKH-Agent.exe.
+3. Keep the black PARAKH Agent window open.
+4. Return to the PARAKH website.
+5. Press "Scan this PC" for Windows or "Scan connected phone" for Android.
+
+Windows scan
+No extra setup is normally required. Windows may show a security warning because a school-project EXE is not code-signed. Only run the file if you downloaded it from the official PARAKH release.
+
+Android scan
+Android Platform Tools / ADB must be installed on the computer.
+On the phone, enable Developer Options and USB debugging.
+Connect the phone with USB and approve the "Allow USB debugging" prompt.
+Run "adb devices" if you need to confirm that the phone is detected.
+
+Privacy
+The agent accepts only PARAKH's predefined Windows and Android scan requests. It does not provide a general remote-command shell.
+
+Closing the agent
+Close the PARAKH Agent window when you are finished scanning.
