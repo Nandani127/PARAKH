@@ -1,0 +1,21 @@
+PARAKH Render + Local Device Agent
+
+1. Copy app.py into the PARAKH project root.
+2. Copy templates/index.html into the templates folder.
+3. Copy parakh_agent.py into the same local folder as windows_scanner.py and android_scanner.py.
+4. Add every line from requirements_socketio_additions.txt to your existing requirements.txt.
+5. On Render use a Web Service, not a Static Site.
+6. Build command:
+   pip install -r requirements.txt
+7. Start command:
+   gunicorn -w 1 --threads 100 app:app
+8. Deploy.
+9. On the Windows computer that will actually be scanned, install the agent dependency if needed:
+   python -m pip install "python-socketio[client]"
+10. Run:
+    python parakh_agent.py
+11. Paste your Render URL when the agent asks for it.
+12. The agent prints a 10-character pairing code. Enter the same code in the Windows or Android scanner page.
+13. For Android scanning, ADB must be installed, USB debugging enabled, and the phone must authorize the PC.
+
+The agent accepts only two predefined actions: windows scan and android scan. It does not execute arbitrary commands received from Render.
