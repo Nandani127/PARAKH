@@ -1,7 +1,10 @@
 import json
+import os
 import platform
 import secrets
+import shutil
 import socketio
+import sys
 import threading
 import time
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -17,6 +20,53 @@ connection_lock = threading.Lock()
 current_server_url = ""
 last_connection_error = ""
 
+
+
+def enable_windows_autostart():
+    if platform.system() != "Windows":
+        return
+
+    if not getattr(sys, "frozen", False):
+        return
+
+    try:
+        import winreg
+
+        local_app_data = os.getenv("LOCALAPPDATA", "")
+
+        if local_app_data == "":
+            return
+
+        install_folder = os.path.join(local_app_data, "PARAKH")
+        install_path = os.path.join(install_folder, "PARAKH-Agent.exe")
+        current_path = os.path.abspath(sys.executable)
+
+        os.makedirs(install_folder, exist_ok=True)
+
+        if os.path.normcase(current_path) != os.path.normcase(install_path):
+            shutil.copy2(current_path, install_path)
+
+        key = winreg.OpenKey(
+            winreg.HKEY_CURRENT_USER,
+            r"Software\Microsoft\Windows\CurrentVersion\Run",
+            0,
+            winreg.KEY_SET_VALUE
+        )
+
+        winreg.SetValueEx(
+            key,
+            "PARAKH-Agent",
+            0,
+            winreg.REG_SZ,
+            '"' + install_path + '"'
+        )
+
+        winreg.CloseKey(key)
+
+        print("PARAKH Agent will start automatically when you sign in to Windows.")
+
+    except Exception as error:
+        print("Could not enable automatic startup:", error)
 
 def normalize_server_url(value):
     value = str(value or "").strip().rstrip("/")
@@ -217,6 +267,8 @@ def run_local_status_server():
 
 
 def main():
+    enable_windows_autostart()
+
     print("====================================")
     print("PARAKH DEVICE AGENT")
     print("====================================")

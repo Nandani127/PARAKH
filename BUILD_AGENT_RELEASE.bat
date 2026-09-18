@@ -24,8 +24,8 @@ echo.
 echo DONE.
 echo Created: %CD%\PARAKH-Agent.zip
 echo.
-echo Upload that exact file name to a GitHub Release in Nandani127/PARAKH.
-echo The website uses the stable latest-release link automatically.
+echo Upload PARAKH-Agent.zip to your GitHub Release.
+echo The first time a user runs PARAKH-Agent.exe, it installs a copy in LocalAppData and adds itself to Windows startup.
 pause
 exit /b 0
 
