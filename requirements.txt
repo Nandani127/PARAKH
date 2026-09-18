@@ -7,3 +7,6 @@ urlextract
 openai
 androguard
 loguru
+Flask-SocketIO
+python-socketio
+simple-websocket
